@@ -30,7 +30,7 @@ public class Test_3a {
 
 		IClassroom ent3_1 = modelFactory.createClassroom();
 		ent3_1.setName("cl1");
-		ent3_1.setStudentCapacity(5);
+		ent3_1.setStudentCapacity(50);
 		ent3_1.setRegion("region");
 		ent3_1.setActivated(createDate(2012, 1, 1));
 		ent3_1.setLastUpdate(createDate(2012, 1, 1));
@@ -47,7 +47,7 @@ public class Test_3a {
 
 		IClassroom ent3_1 = modelFactory.createClassroom();
 		ent3_1.setName(TestData.N_ENT3_1);
-		ent3_1.setStudentCapacity(5);
+		ent3_1.setStudentCapacity(50);
 		ent3_1.setRegion("AUT-VIE@1040");
 		ent3_1.setActivated(createDate(2011, 1, 1));
 		ent3_1.setLastUpdate(createDate(2011, 1, 1));
