@@ -2,6 +2,7 @@ package dst.ass1.jpa.model;
 
 import java.io.Serializable;
 
+import dst.ass1.jpa.model.impl.*;
 import dst.ass2.ejb.model.IAuditLog;
 import dst.ass2.ejb.model.IAuditParameter;
 import dst.ass2.ejb.model.IPrice;
@@ -11,58 +12,47 @@ public class ModelFactory implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public IAddress createAddress() {
-		// TODO
-		return null;
+		return new Address();
 	}
 
 	public IModerator createModerator() {
-		// TODO
-		return null;
+		return new Moderator();
 	}
 
 	public IVirtualSchool createVirtualSchool() {
-		// TODO
-		return null;
+		return new VirtualSchool();
 	}
 
 	public IClassroom createClassroom() {
-		// TODO
-		return null;
+		return new Classroom();
 	}
 
 	public IMetadata createMetadata() {
-		// TODO
-		return null;
+		return new Metadata();
 	}
 
 	public ILectureStreaming createLectureStreaming() {
-		// TODO
-		return null;
+		return new LectureStreaming();
 	}
 
 	public IMOCPlatform createPlatform() {
-		// TODO
-		return null;
+		return new MOCPlatform();
 	}
 
 	public ILecture createLecture() {
-		// TODO
-		return null;
+		return new Lecture();
 	}
 
 	public IMembership createMembership() {
-		// TODO
-		return null;
+		return new Membership();
 	}
 
 	public IMembershipKey createMembershipKey() {
-		// TODO
-		return null;
+		return new MembershipKey();
 	}
 
 	public ILecturer createLecturer() {
-		// TODO
-		return null;
+		return new Lecturer();
 	}
 
 	/*

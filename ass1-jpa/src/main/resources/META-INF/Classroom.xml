@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
-	version="2.0">
-	<description>Mapping file for Classroom</description>
-	<!-- TODO -->
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm http://java.sun.com/xml/ns/persistence/orm_2_0.xsd"
+    version="2.0">
+    <description>Mapping file for Classroom</description>
+    <entity class="dst.ass1.jpa.model.impl.Classroom">
+        <attributes>
+            <id name="id">
+                <generated-value/>
+            </id>
+
+            <many-to-one name="virtualSchool" target-entity="dst.ass1.jpa.model.impl.VirtualSchool">
+            </many-to-one>
+            <many-to-many name="lectureStreamings" mapped-by="classrooms" target-entity="dst.ass1.jpa.model.impl.LectureStreaming">
+            </many-to-many>
+        </attributes>
+    </entity>
 </entity-mappings>
