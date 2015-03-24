@@ -4,15 +4,19 @@ import dst.ass1.jpa.model.ILecture;
 import dst.ass1.jpa.model.ILectureStreaming;
 import dst.ass1.jpa.model.ILecturer;
 import dst.ass1.jpa.model.IMetadata;
+import dst.ass1.jpa.util.Constants;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by pavol on 24.3.2015.
  */
 @Entity
+@NamedQueries({
+        @NamedQuery(name = Constants.Q_ALLFINISHEDLECTURES,
+                query = "select l from Lecture as l" +
+                        " where l.lectureStreaming.lectureStatus = dst.ass1.jpa.model.LectureStatus.FINISHED"),
+})
 public class Lecture implements ILecture {
 
     @Id
@@ -23,8 +27,9 @@ public class Lecture implements ILecture {
     private boolean isPaid;
 
     @OneToOne(targetEntity = Metadata.class)
+    @JoinColumn(name = "metadata_id", unique = true)
     private IMetadata metadata;
-    @OneToOne(targetEntity = LectureStreaming.class)
+    @OneToOne(targetEntity = LectureStreaming.class, optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "lectureStreaming_id")
     private ILectureStreaming lectureStreaming;
     @ManyToOne(targetEntity = Lecturer.class)

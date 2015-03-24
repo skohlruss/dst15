@@ -3,8 +3,11 @@ package dst.ass1.jpa.model.impl;
 import dst.ass1.jpa.model.ILecture;
 import dst.ass1.jpa.model.ILecturer;
 import dst.ass1.jpa.model.IMembership;
+import dst.ass1.jpa.util.Constants;
+import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,19 +18,33 @@ import java.util.List;
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"accountNo", "bankCode"})
 })
+@NamedQueries({
+        @NamedQuery(name = Constants.Q_LECTURERSWITHACTIVEMEMBERSHIP,
+                query = "select l from Membership as mem" +
+                        " left join mem.id.lecturer l" +
+                        " left join mem.id.mocPlatform moc" +
+                        " where moc.name = :name " +
+                        " and :minNr <= (select count(distinct lect) from Lecture lect left join lect.lectureStreaming.classrooms classroom where l = lect.lecturer and classroom.virtualSchool.mocPlatform = moc)"
+        ),
+        @NamedQuery(name = Constants.Q_MOSTACTIVELECTURER,
+                query = "select l from Lecturer as l" +
+                        " where (select max(lecturer.lectures.size) from Lecturer as lecturer) = l.lectures.size"
+        )
+})
 public class Lecturer extends Person implements ILecturer{
 
     @Column(unique = true, nullable = false)
     private String lecturerName;
+    @Index(name = "password_index")
     @Column(columnDefinition = "VARBINARY(16)")
     private byte[] password;
     private String accountNo;
     private String bankCode;
 
     @OneToMany(mappedBy = "id.lecturer",targetEntity = Membership.class)
-    private List<IMembership> memberships;
+    private List<IMembership> memberships = new ArrayList<>();
     @OneToMany(mappedBy = "lecturer", targetEntity = Lecture.class)
-    private List<ILecture> lectures;
+    private List<ILecture> lectures = new ArrayList<>();
 
 
     @Override

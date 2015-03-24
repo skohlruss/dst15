@@ -2,10 +2,10 @@ package dst.ass1.jpa.model.impl;
 
 import dst.ass1.jpa.model.IModerator;
 import dst.ass1.jpa.model.IVirtualSchool;
+import dst.ass1.jpa.util.Constants;
 
-import javax.persistence.DiscriminatorValue;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,10 +13,15 @@ import java.util.List;
  */
 @Entity
 @DiscriminatorValue("m")
+@NamedQueries({
+        @NamedQuery(name = Constants.Q_VIRTUALSCHOOLSOFMODERATOR,
+                query = "select m from Moderator as m"
+        )
+})
 public class Moderator extends Person implements IModerator {
 
     @OneToMany(mappedBy = "moderator", targetEntity = VirtualSchool.class)
-    private List<IVirtualSchool> virtualSchools;
+    private List<IVirtualSchool> virtualSchools = new ArrayList<>();
 
     @Override
     public List<IVirtualSchool> getAdvisedVirtualSchools() {

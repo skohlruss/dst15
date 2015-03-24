@@ -7,6 +7,7 @@ import dst.ass1.jpa.model.LectureStatus;
 import dst.ass1.jpa.util.Constants;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class LectureStreaming implements ILectureStreaming {
     private ILecture lecture;
     @ManyToMany(targetEntity = Classroom.class)
     @JoinTable(name = Constants.J_STREAMING_CLASSROOM)
-    private List<IClassroom> classrooms;
+    private List<IClassroom> classrooms = new ArrayList<>();
 
 
     @Override

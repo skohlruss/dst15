@@ -4,6 +4,7 @@ import dst.ass1.jpa.model.IClassroom;
 import dst.ass1.jpa.model.ILectureStreaming;
 import dst.ass1.jpa.model.IVirtualSchool;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class Classroom implements IClassroom {
     private Date activated;
     private Date lastUpdate;
 
-    private List<ILectureStreaming> lectureStreamings;
+    private List<ILectureStreaming> lectureStreamings = new ArrayList<>();
     private IVirtualSchool virtualSchool;
 
 

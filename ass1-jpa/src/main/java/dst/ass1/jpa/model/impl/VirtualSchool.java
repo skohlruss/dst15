@@ -7,6 +7,7 @@ import dst.ass1.jpa.model.IVirtualSchool;
 import dst.ass1.jpa.util.Constants;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -19,6 +20,7 @@ public class VirtualSchool implements IVirtualSchool {
     @Id
     @GeneratedValue
     private Long id;
+    @Column(unique = true)
     private String name;
     private Date lastMaintenance;
     private Date nextMaintenance;
@@ -30,13 +32,13 @@ public class VirtualSchool implements IVirtualSchool {
     @ManyToOne(targetEntity = MOCPlatform.class)
     private IMOCPlatform mocPlatform;
     @OneToMany(mappedBy = "virtualSchool",targetEntity = Classroom.class)
-    private List<IClassroom> classrooms;
+    private List<IClassroom> classrooms = new ArrayList<>();
 
     @ManyToMany(targetEntity = VirtualSchool.class)
     @JoinTable(name = Constants.J_VIRTUALSCHOOL_COMPOSEDOF)
-    private List<IVirtualSchool> composedOf;
+    private List<IVirtualSchool> composedOf = new ArrayList<>();
     @ManyToMany(mappedBy = "composedOf", targetEntity = VirtualSchool.class)
-    private List<IVirtualSchool> partOf;
+    private List<IVirtualSchool> partOf = new ArrayList<>();
 
 
     @Override

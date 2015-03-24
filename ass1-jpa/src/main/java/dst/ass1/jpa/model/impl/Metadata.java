@@ -1,11 +1,10 @@
 package dst.ass1.jpa.model.impl;
 
 import dst.ass1.jpa.model.IMetadata;
+import dst.ass1.jpa.util.Constants;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,7 +19,9 @@ public class Metadata implements IMetadata {
     private String course;
 
     @ElementCollection
-    private List<String> settings;
+    @OrderColumn
+    @JoinTable(name = Constants.J_METADATA_SETTINGS)
+    private List<String> settings = new ArrayList<>();
 
 
     @Override
@@ -45,7 +46,7 @@ public class Metadata implements IMetadata {
 
     @Override
     public List<String> getSettings() {
-        return null;
+        return settings;
     }
 
     @Override

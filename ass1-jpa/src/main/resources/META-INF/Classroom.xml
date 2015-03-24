@@ -10,6 +10,10 @@
                 <generated-value/>
             </id>
 
+            <basic name="name">
+                <column unique="true" />
+            </basic>
+
             <many-to-one name="virtualSchool" target-entity="dst.ass1.jpa.model.impl.VirtualSchool">
             </many-to-one>
             <many-to-many name="lectureStreamings" mapped-by="classrooms" target-entity="dst.ass1.jpa.model.impl.LectureStreaming">

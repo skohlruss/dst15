@@ -19,6 +19,7 @@ public class MembershipKey implements IMembershipKey, Serializable {
     @ManyToOne(targetEntity = MOCPlatform.class)
     private IMOCPlatform mocPlatform;
 
+
     @Override
     public ILecturer getLecturer() {
         return lecturer;
