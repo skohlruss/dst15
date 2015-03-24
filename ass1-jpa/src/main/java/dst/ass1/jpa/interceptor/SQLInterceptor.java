@@ -4,27 +4,34 @@ import org.hibernate.EmptyInterceptor;
 
 public class SQLInterceptor extends EmptyInterceptor {
 
-	private static final long serialVersionUID = 3894614218727237142L;
+    private static final long serialVersionUID = 3894614218727237142L;
 
-	public String onPrepareStatement(String sql) {
-		
-		// TODO
-		
-		return sql;
-	}
+    private static int counter;
+    private static boolean verbose;
 
-	public static void resetCounter() {
-		// TODO
-	}
+    public String onPrepareStatement(String sql) {
 
-	
-	public static int getSelectCount() {
-		// TODO
-		return -1;
-	}
+        String sqlLowerCase = sql.toLowerCase();
 
-	public static void setVerbose(boolean verbose) {
-		// TODO
-	}
+        if (sqlLowerCase.startsWith("select") &&
+                (sqlLowerCase.contains("moderator") || sqlLowerCase.contains("virtualschool"))) {
+            counter++;
+        }
+
+        return sql;
+    }
+
+    public static void resetCounter() {
+        counter = 0;
+    }
+
+
+    public static int getSelectCount() {
+        return counter;
+    }
+
+    public static void setVerbose(boolean verbose) {
+        SQLInterceptor.verbose = verbose;
+    }
 
 }

@@ -5,6 +5,10 @@
     version="2.0">
     <description>Mapping file for Classroom</description>
     <entity class="dst.ass1.jpa.model.impl.Classroom">
+        <entity-listeners>
+            <entity-listener class="dst.ass1.jpa.listener.ClassroomListener"/>
+        </entity-listeners>
+
         <attributes>
             <id name="id">
                 <generated-value/>
