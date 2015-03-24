@@ -31,7 +31,7 @@ public class VirtualSchoolDAO implements IVirtualSchoolDAO {
     public List<IVirtualSchool> findAll() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<IVirtualSchool> cq = cb.createQuery(IVirtualSchool.class);
-        Root<IVirtualSchool> root = cq.from(IVirtualSchool.class);
+        Root<VirtualSchool> root = cq.from(VirtualSchool.class);
 
         cq.select(root);
         TypedQuery<IVirtualSchool> query = em.createQuery(cq);

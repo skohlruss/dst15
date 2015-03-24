@@ -2,6 +2,7 @@ package dst.ass1.jpa.dao.impl;
 
 import dst.ass1.jpa.dao.IMOCPlatformDAO;
 import dst.ass1.jpa.model.IMOCPlatform;
+import dst.ass1.jpa.model.impl.MOCPlatform;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -25,7 +26,7 @@ public class MOCPlatformDAO implements IMOCPlatformDAO {
     public List<IMOCPlatform> findByName(String name) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<IMOCPlatform> cq = cb.createQuery(IMOCPlatform.class);
-        Root<IMOCPlatform> root = cq.from(IMOCPlatform.class);
+        Root<MOCPlatform> root = cq.from(MOCPlatform.class);
 
         cq.select(root);
         cq.where(cb.equal(root.get("name"), name));
@@ -42,7 +43,7 @@ public class MOCPlatformDAO implements IMOCPlatformDAO {
     public List<IMOCPlatform> findAll() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<IMOCPlatform> cq = cb.createQuery(IMOCPlatform.class);
-        Root<IMOCPlatform> root = cq.from(IMOCPlatform.class);
+        Root<MOCPlatform> root = cq.from(MOCPlatform.class);
 
         cq.select(root);
         TypedQuery<IMOCPlatform> query = em.createQuery(cq);

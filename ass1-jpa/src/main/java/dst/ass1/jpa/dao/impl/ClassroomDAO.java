@@ -37,7 +37,7 @@ public class ClassroomDAO implements IClassroomDAO {
     public List<IClassroom> findAll() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<IClassroom> cq = cb.createQuery(IClassroom.class);
-        Root<IClassroom> root = cq.from(IClassroom.class);
+        Root<Classroom> root = cq.from(Classroom.class);
 
         cq.select(root);
         TypedQuery<IClassroom> query = em.createQuery(cq);

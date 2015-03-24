@@ -31,7 +31,7 @@ public class MetadataDAO implements IMetadataDAO {
     public List<IMetadata> findAll() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<IMetadata> cq = cb.createQuery(IMetadata.class);
-        Root<IMetadata> root = cq.from(IMetadata.class);
+        Root<Metadata> root = cq.from(Metadata.class);
 
         cq.select(root);
         TypedQuery<IMetadata> query = em.createQuery(cq);

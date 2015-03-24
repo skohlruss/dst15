@@ -2,6 +2,7 @@ package dst.ass1.jpa.dao.impl;
 
 import dst.ass1.jpa.dao.IModeratorDAO;
 import dst.ass1.jpa.model.IModerator;
+import dst.ass1.jpa.model.impl.Moderator;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -37,7 +38,7 @@ public class ModeratorDAO implements IModeratorDAO {
     public List<IModerator> findAll() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<IModerator> cq = cb.createQuery(IModerator.class);
-        Root<IModerator> root = cq.from(IModerator.class);
+        Root<Moderator> root = cq.from(Moderator.class);
 
         cq.select(root);
         TypedQuery<IModerator> query = em.createQuery(cq);

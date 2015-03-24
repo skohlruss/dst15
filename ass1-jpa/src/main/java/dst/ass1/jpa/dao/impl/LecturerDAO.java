@@ -28,7 +28,7 @@ public class LecturerDAO implements ILecturerDAO {
     public List<ILecturer> findByName(String lecturerName) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<ILecturer> cq = cb.createQuery(ILecturer.class);
-        Root<ILecturer> root = cq.from(ILecturer.class);
+        Root<Lecturer> root = cq.from(Lecturer.class);
 
         Predicate idPredicate = cb.equal(root.get("lecturerName"), lecturerName);
         cq.select(root);
@@ -47,7 +47,7 @@ public class LecturerDAO implements ILecturerDAO {
     public List<ILecturer> findAll() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<ILecturer> cq = cb.createQuery(ILecturer.class);
-        Root<ILecturer> root = cq.from(ILecturer.class);
+        Root<Lecturer> root = cq.from(Lecturer.class);
 
         cq.select(root);
         TypedQuery<ILecturer> query = em.createQuery(cq);

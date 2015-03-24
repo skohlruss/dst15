@@ -4,6 +4,7 @@ import dst.ass1.jpa.dao.IMembershipDAO;
 import dst.ass1.jpa.model.ILecturer;
 import dst.ass1.jpa.model.IMembership;
 import dst.ass1.jpa.model.IMOCPlatform;
+import dst.ass1.jpa.model.impl.Membership;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
@@ -32,7 +33,7 @@ public class MembershipDAO implements IMembershipDAO {
     public List<IMembership> findAll() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<IMembership> cq = cb.createQuery(IMembership.class);
-        Root<IMembership> root = cq.from(IMembership.class);
+        Root<Membership> root = cq.from(Membership.class);
 
         cq.select(root);
         TypedQuery<IMembership> query = em.createQuery(cq);
