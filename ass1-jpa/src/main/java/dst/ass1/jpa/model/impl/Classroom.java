@@ -3,6 +3,7 @@ package dst.ass1.jpa.model.impl;
 import dst.ass1.jpa.model.IClassroom;
 import dst.ass1.jpa.model.ILectureStreaming;
 import dst.ass1.jpa.model.IVirtualSchool;
+import dst.ass1.jpa.validator.StudentCapacity;
 
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
@@ -19,6 +20,7 @@ public class Classroom implements IClassroom {
     private Long id;
     @Size(min = 5, max = 25)
     private String name;
+    @StudentCapacity(min = 40, max = 80)
     private Integer studentCapacity;
     @Pattern(regexp = "[A-Z]{3}-[A-Z]{3}@[0-9]{4,}")
     private String region;

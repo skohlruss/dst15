@@ -56,6 +56,7 @@ public class LectureDAO implements ILectureDAO {
     /**
      * Hibernate criteria - query by example
      *
+     * http://java.dzone.com/articles/hibernate-query-example-qbe
      * Version properties, identifiers and associations are ignored
      */
 
