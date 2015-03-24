@@ -36,7 +36,7 @@ public class MOCPlatformDAO implements IMOCPlatformDAO {
 
     @Override
     public IMOCPlatform findById(Long id) {
-        return em.find(IMOCPlatform.class, id);
+        return em.find(MOCPlatform.class, id);
     }
 
     @Override

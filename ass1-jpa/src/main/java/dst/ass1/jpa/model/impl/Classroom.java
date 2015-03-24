@@ -4,6 +4,9 @@ import dst.ass1.jpa.model.IClassroom;
 import dst.ass1.jpa.model.ILectureStreaming;
 import dst.ass1.jpa.model.IVirtualSchool;
 
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,10 +17,14 @@ import java.util.List;
 public class Classroom implements IClassroom {
 
     private Long id;
+    @Size(min = 5, max = 25)
     private String name;
     private Integer studentCapacity;
+    @Pattern(regexp = "[A-Z]{3}-[A-Z]{3}@[0-9]{4,}")
     private String region;
+    @Past
     private Date activated;
+    @Past
     private Date lastUpdate;
 
     private List<ILectureStreaming> lectureStreamings = new ArrayList<>();

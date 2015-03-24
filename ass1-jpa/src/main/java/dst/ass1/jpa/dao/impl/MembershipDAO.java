@@ -26,7 +26,7 @@ public class MembershipDAO implements IMembershipDAO {
 
     @Override
     public IMembership findById(Long id) {
-        return em.find(IMembership.class, id);
+        return em.find(Membership.class, id);
     }
 
     @Override

@@ -15,7 +15,10 @@ import java.util.List;
 @DiscriminatorValue("m")
 @NamedQueries({
         @NamedQuery(name = Constants.Q_VIRTUALSCHOOLSOFMODERATOR,
-                query = "select m from Moderator as m"
+                query = "select m from Moderator as m" +
+                        " left join fetch m.virtualSchools vs" +
+                        " where m.firstName like 'Alex%' " +
+                        " order by vs.nextMaintenance"
         )
 })
 public class Moderator extends Person implements IModerator {

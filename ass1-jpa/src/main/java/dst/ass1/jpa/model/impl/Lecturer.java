@@ -24,11 +24,17 @@ import java.util.List;
                         " left join mem.id.lecturer l" +
                         " left join mem.id.mocPlatform moc" +
                         " where moc.name = :name " +
-                        " and :minNr <= (select count(distinct lect) from Lecture lect left join lect.lectureStreaming.classrooms classroom where l = lect.lecturer and classroom.virtualSchool.mocPlatform = moc)"
+                        " and :minNr <= " +
+                        " (select count(distinct lect) " +
+                        "   from Lecture lect " +
+                        "   left join lect.lectureStreaming.classrooms classroom " +
+                        "   where l = lect.lecturer and classroom.virtualSchool.mocPlatform = moc)"
         ),
         @NamedQuery(name = Constants.Q_MOSTACTIVELECTURER,
                 query = "select l from Lecturer as l" +
-                        " where (select max(lecturer.lectures.size) from Lecturer as lecturer) = l.lectures.size"
+                        " where (select max(lecturer.lectures.size) " +
+                        "        from Lecturer as lecturer) = l.lectures.size" +
+                        " and l.lectures.size > 0"
         )
 })
 public class Lecturer extends Person implements ILecturer{
