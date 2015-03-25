@@ -3,6 +3,11 @@
 * Project of **184.260 Distributed Systems Technologies 2015S** on TU Wien
 * Assignment documets can be found in this repository.
 
+### Run test ###
+* mvn install -Pass1-jpa
+* mvn install -Pass1-nosql
+* mvn install clean install -U
+
 ### Original TU git repo ###
 * TU repository for basic project structure is located on git://hypnotoad.infosys.tuwien.ac.at/dst15/dst15.git
 * for pulling changes do git pull tu master
