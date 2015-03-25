@@ -14,17 +14,17 @@ public class DefaultListener {
     private static AtomicInteger persisted = new AtomicInteger(0);
     private static AtomicLong persistTime = new AtomicLong(0);
 
-    private static final Map<Integer, Long> persist = new HashMap<>();
+    private static final Map<Integer, Long> persistMap = new HashMap<>();
 
     @PrePersist
     void onPrePersist(Object o) {
-        persist.put(o.hashCode(), System.currentTimeMillis());
+        persistMap.put(o.hashCode(), System.currentTimeMillis());
     }
     @PostPersist
     void onPostPersist(Object o ) {
         persisted.incrementAndGet();
 
-        persistTime.addAndGet(System.currentTimeMillis() - persist.remove(o.hashCode()));
+        persistTime.addAndGet(System.currentTimeMillis() - persistMap.remove(o.hashCode()));
     }
     @PostLoad
     void onPostLoad(Object o) {
@@ -61,7 +61,11 @@ public class DefaultListener {
     }
 
     public static double getAverageTimeToPersist() {
-        return (persisted.intValue() == 0) ? 0l : (persistTime.longValue() / persisted.intValue());
+        if (persisted.intValue() == 0) {
+            return 0l;
+        }
+
+        return (double) persistTime.longValue() / persisted.intValue();
     }
 
     public static synchronized void clear() {
