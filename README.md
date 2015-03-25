@@ -1,6 +1,6 @@
 # README #
 
-* Project of 184.260 Distributed Systems Technologies 2015S on TU Wien
+* Project of **184.260 Distributed Systems Technologies 2015S** on TU Wien
 * Assignment documets can be found in this repository.
 
 ### Original TU git repo ###
