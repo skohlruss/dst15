@@ -1,11 +1,10 @@
 package dst.ass1.jpa.dao;
 
-import javax.persistence.EntityManager;
-
-import dst.ass1.jpa.dao.impl.ClassroomDAO;
 import dst.ass1.jpa.dao.impl.*;
 import dst.ass2.ejb.dao.IAuditLogDAO;
 import dst.ass2.ejb.dao.IPriceDAO;
+
+import javax.persistence.EntityManager;
 
 public class DAOFactory {
 

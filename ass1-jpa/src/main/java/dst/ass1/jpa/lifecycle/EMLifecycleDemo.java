@@ -1,13 +1,12 @@
 package dst.ass1.jpa.lifecycle;
 
-import java.security.NoSuchAlgorithmException;
-
-import javax.persistence.EntityManager;
-
 import dst.ass1.jpa.model.ILecture;
 import dst.ass1.jpa.model.ILectureStreaming;
 import dst.ass1.jpa.model.ILecturer;
 import dst.ass1.jpa.model.ModelFactory;
+
+import javax.persistence.EntityManager;
+import java.security.NoSuchAlgorithmException;
 
 public class EMLifecycleDemo {
 

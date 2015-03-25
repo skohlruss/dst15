@@ -2,8 +2,8 @@ package dst.ass1.jpa.dao.impl;
 
 import dst.ass1.jpa.dao.IMembershipDAO;
 import dst.ass1.jpa.model.ILecturer;
-import dst.ass1.jpa.model.IMembership;
 import dst.ass1.jpa.model.IMOCPlatform;
+import dst.ass1.jpa.model.IMembership;
 import dst.ass1.jpa.model.impl.Membership;
 
 import javax.persistence.EntityManager;

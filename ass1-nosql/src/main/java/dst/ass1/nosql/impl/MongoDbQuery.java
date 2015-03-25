@@ -1,8 +1,6 @@
 package dst.ass1.nosql.impl;
 
 import com.mongodb.*;
-import dst.ass1.jpa.model.ILecture;
-import dst.ass1.jpa.model.impl.Lecture;
 import dst.ass1.jpa.util.Constants;
 import dst.ass1.nosql.IMongoDbQuery;
 

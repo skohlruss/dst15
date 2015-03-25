@@ -3,9 +3,6 @@ package dst.ass1.jpa.model.impl;
 import dst.ass1.jpa.model.IAddress;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
 
 /**
  * Created by pavol on 24.3.2015.

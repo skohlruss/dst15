@@ -1,7 +1,6 @@
 package dst.ass1.jpa.dao.impl;
 
 import dst.ass1.jpa.dao.ILecturerDAO;
-import dst.ass1.jpa.model.ILecture;
 import dst.ass1.jpa.model.ILecturer;
 import dst.ass1.jpa.model.impl.Lecturer;
 

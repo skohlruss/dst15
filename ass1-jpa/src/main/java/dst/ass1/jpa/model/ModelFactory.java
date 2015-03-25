@@ -1,11 +1,11 @@
 package dst.ass1.jpa.model;
 
-import java.io.Serializable;
-
 import dst.ass1.jpa.model.impl.*;
 import dst.ass2.ejb.model.IAuditLog;
 import dst.ass2.ejb.model.IAuditParameter;
 import dst.ass2.ejb.model.IPrice;
+
+import java.io.Serializable;
 
 public class ModelFactory implements Serializable {
 
