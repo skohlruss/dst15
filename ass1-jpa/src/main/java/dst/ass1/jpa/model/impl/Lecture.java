@@ -23,7 +23,9 @@ public class Lecture implements ILecture, Serializable {
     @Id
     @GeneratedValue
     private Long id;
+    @Transient
     private Integer streamingTime;
+    @Transient
     private Integer attendingStudents;
     private boolean isPaid;
 
