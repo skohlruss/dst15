@@ -8,6 +8,7 @@ import dst.ass1.jpa.validator.StudentCapacity;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 /**
  * Created by pavol on 24.3.2015.
  */
-public class Classroom implements IClassroom {
+public class Classroom implements IClassroom, Serializable {
 
     private Long id;
     @Size(min = 5, max = 25)

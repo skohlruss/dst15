@@ -4,6 +4,7 @@ import dst.ass1.jpa.model.IAddress;
 import dst.ass1.jpa.model.IPerson;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by pavol on 24.3.2015.
@@ -11,7 +12,7 @@ import javax.persistence.*;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name = "type")
-public class Person implements IPerson {
+public class Person implements IPerson, Serializable {
 
     @Id
     @GeneratedValue

@@ -5,13 +5,14 @@ import dst.ass1.jpa.model.IMembershipKey;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by pavol on 24.3.2015.
  */
 @Entity
-public class Membership implements IMembership {
+public class Membership implements IMembership, Serializable {
 
     @EmbeddedId
     private MembershipKey id;

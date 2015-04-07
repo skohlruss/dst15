@@ -7,6 +7,7 @@ import dst.ass1.jpa.model.LectureStatus;
 import dst.ass1.jpa.util.Constants;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
  * Created by pavol on 24.3.2015.
  */
 @Entity
-public class LectureStreaming implements ILectureStreaming {
+public class LectureStreaming implements ILectureStreaming, Serializable {
 
     @Id
     @GeneratedValue

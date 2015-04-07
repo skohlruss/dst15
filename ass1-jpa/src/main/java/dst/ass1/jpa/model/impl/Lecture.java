@@ -7,6 +7,7 @@ import dst.ass1.jpa.model.IMetadata;
 import dst.ass1.jpa.util.Constants;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by pavol on 24.3.2015.
@@ -17,7 +18,7 @@ import javax.persistence.*;
                 query = "select l from Lecture as l" +
                         " where l.lectureStreaming.lectureStatus = dst.ass1.jpa.model.LectureStatus.FINISHED"),
 })
-public class Lecture implements ILecture {
+public class Lecture implements ILecture, Serializable {
 
     @Id
     @GeneratedValue

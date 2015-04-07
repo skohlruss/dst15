@@ -3,12 +3,13 @@ package dst.ass1.jpa.model.impl;
 import dst.ass1.jpa.model.IAddress;
 
 import javax.persistence.Embeddable;
+import java.io.Serializable;
 
 /**
  * Created by pavol on 24.3.2015.
  */
 @Embeddable
-public class Address implements IAddress {
+public class Address implements IAddress, Serializable {
 
     private String street;
     private String city;

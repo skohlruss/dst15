@@ -5,6 +5,7 @@ import dst.ass1.jpa.model.IVirtualSchool;
 import dst.ass1.jpa.util.Constants;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
                         " order by vs.nextMaintenance"
         )
 })
-public class Moderator extends Person implements IModerator {
+public class Moderator extends Person implements IModerator, Serializable {
 
     @OneToMany(mappedBy = "moderator", targetEntity = VirtualSchool.class)
     private List<IVirtualSchool> virtualSchools = new ArrayList<>();

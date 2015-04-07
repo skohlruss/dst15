@@ -5,6 +5,7 @@ import dst.ass1.jpa.model.IMembership;
 import dst.ass1.jpa.model.IVirtualSchool;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
  * Created by pavol on 24.3.2015.
  */
 @Entity
-public class MOCPlatform implements IMOCPlatform {
+public class MOCPlatform implements IMOCPlatform, Serializable {
 
     @Id
     @GeneratedValue

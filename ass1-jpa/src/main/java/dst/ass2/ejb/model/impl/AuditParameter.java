@@ -7,12 +7,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import java.io.Serializable;
 
 /**
  * Created by pavol on 7.4.2015.
  */
 @Entity
-public class AuditParameter implements IAuditParameter {
+public class AuditParameter implements IAuditParameter, Serializable {
 
     @Id
     @GeneratedValue

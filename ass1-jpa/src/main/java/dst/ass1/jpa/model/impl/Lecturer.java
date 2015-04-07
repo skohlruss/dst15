@@ -7,6 +7,7 @@ import dst.ass1.jpa.util.Constants;
 import org.hibernate.annotations.Index;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ import java.util.List;
                         " and l.lectures.size > 0"
         )
 })
-public class Lecturer extends Person implements ILecturer{
+public class Lecturer extends Person implements ILecturer, Serializable {
 
     @Column(unique = true, nullable = false)
     private String lecturerName;

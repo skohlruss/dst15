@@ -5,13 +5,14 @@ import dst.ass2.ejb.model.IPrice;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * Created by pavol on 7.4.2015.
  */
 @Entity
-public class Price implements IPrice {
+public class Price implements IPrice, Serializable {
 
     @Id
     @GeneratedValue

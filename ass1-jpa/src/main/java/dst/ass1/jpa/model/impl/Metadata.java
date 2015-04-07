@@ -4,6 +4,7 @@ import dst.ass1.jpa.model.IMetadata;
 import dst.ass1.jpa.util.Constants;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,7 +12,7 @@ import java.util.List;
  * Created by pavol on 24.3.2015.
  */
 @Entity
-public class Metadata implements IMetadata {
+public class Metadata implements IMetadata, Serializable {
 
     @Id
     @GeneratedValue

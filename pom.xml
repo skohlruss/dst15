@@ -8,6 +8,11 @@
 	<packaging>pom</packaging>
 	<version>2015</version>
 
+	<modules>
+		<module>ass1-jpa</module>
+		<module>ass1-nosql</module>
+	</modules>
+
 	<build>
 		<plugins>
 			<plugin>

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  * Created by pavol on 7.4.2015.
  */
 @Entity
-public class AuditLog implements IAuditLog {
+public class AuditLog implements IAuditLog, Serializable {
 
     @Id
     @GeneratedValue
