@@ -3,6 +3,8 @@ package dst.ass1.jpa.dao;
 import dst.ass1.jpa.dao.impl.*;
 import dst.ass2.ejb.dao.IAuditLogDAO;
 import dst.ass2.ejb.dao.IPriceDAO;
+import dst.ass2.ejb.dao.impl.AuditLogDAO;
+import dst.ass2.ejb.dao.impl.PriceDAO;
 
 import javax.persistence.EntityManager;
 
@@ -65,13 +67,11 @@ public class DAOFactory {
      */
 
     public IAuditLogDAO getAuditLogDAO() {
-        // TODO
-        return null;
+        return new AuditLogDAO(em);
     }
 
     public IPriceDAO getPriceDAO() {
-        // TODO
-        return null;
+        return new PriceDAO(em);
     }
 
 }

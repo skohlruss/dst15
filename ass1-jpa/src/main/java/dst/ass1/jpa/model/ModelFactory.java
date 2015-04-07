@@ -4,6 +4,9 @@ import dst.ass1.jpa.model.impl.*;
 import dst.ass2.ejb.model.IAuditLog;
 import dst.ass2.ejb.model.IAuditParameter;
 import dst.ass2.ejb.model.IPrice;
+import dst.ass2.ejb.model.impl.AuditLog;
+import dst.ass2.ejb.model.impl.AuditParameter;
+import dst.ass2.ejb.model.impl.Price;
 
 import java.io.Serializable;
 
@@ -62,18 +65,15 @@ public class ModelFactory implements Serializable {
 	 */
 
 	public IAuditLog createAuditLog() {
-		// TODO
-		return null;
+		return new AuditLog();
 	}
 
 	public IAuditParameter createAuditParameter() {
-		// TODO
-		return null;
+		return new AuditParameter();
 	}
 
 	public IPrice createPrice() {
-		// TODO
-		return null;
+		return new Price();
 	}
 
 }
