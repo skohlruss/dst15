@@ -7,40 +7,31 @@ import dst.ass1.jpa.model.impl.Classroom;
 
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 /**
  * Created by pavol on 24.3.2015.
  */
-public class ClassroomDAO implements IClassroomDAO {
-
-    private EntityManager em;
+public class ClassroomDAO extends GenericDAOImpl<IClassroom> implements IClassroomDAO {
 
     public ClassroomDAO(EntityManager em) {
-        this.em = em;
+        super(em, Classroom.class);
     }
 
+    /**
+     * TODO ask - VirtualSchool partOf, composedOf - recursive join
+     */
     @Override
     public List<IClassroom> findByPlatform(IMOCPlatform platform) {
-        return null;
-    }
+        TypedQuery<IClassroom> query =
+                getEm().createQuery("SELECT distinct classroom FROM MOCPlatform platform " +
+                               "left join platform.virtualSchools vs " +
+                               "left join vs.classrooms classroom " +
+                               "where platform.id = :id",
+                        IClassroom.class);
 
-    @Override
-    public IClassroom findById(Long id) {
-        return em.find(Classroom.class, id);
-    }
+        query.setParameter("id", platform.getId());
 
-    @Override
-    public List<IClassroom> findAll() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<IClassroom> cq = cb.createQuery(IClassroom.class);
-        Root<Classroom> root = cq.from(Classroom.class);
-
-        cq.select(root);
-        TypedQuery<IClassroom> query = em.createQuery(cq);
         return query.getResultList();
     }
 }

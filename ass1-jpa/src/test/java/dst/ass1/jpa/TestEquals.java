@@ -1,7 +1,6 @@
 package dst.ass1.jpa;
 
 import dst.ass1.AbstractTest;
-import dst.ass1.jpa.dao.ILectureDAO;
 import dst.ass1.jpa.dao.ILecturerDAO;
 import dst.ass1.jpa.model.ILecturer;
 import org.junit.Test;

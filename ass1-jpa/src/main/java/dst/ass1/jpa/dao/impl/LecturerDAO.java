@@ -15,17 +15,15 @@ import java.util.List;
 /**
  * Created by pavol on 24.3.2015.
  */
-public class LecturerDAO implements ILecturerDAO {
-
-    private EntityManager em;
+public class LecturerDAO extends GenericDAOImpl<ILecturer> implements ILecturerDAO {
 
     public LecturerDAO(EntityManager em) {
-        this.em = em;
+        super(em, Lecturer.class);
     }
 
     @Override
     public List<ILecturer> findByName(String lecturerName) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaBuilder cb = getEm().getCriteriaBuilder();
         CriteriaQuery<ILecturer> cq = cb.createQuery(ILecturer.class);
         Root<Lecturer> root = cq.from(Lecturer.class);
 
@@ -33,23 +31,7 @@ public class LecturerDAO implements ILecturerDAO {
         cq.select(root);
         cq.where(cb.and(idPredicate));
 
-        TypedQuery<ILecturer> query = em.createQuery(cq);
-        return query.getResultList();
-    }
-
-    @Override
-    public ILecturer findById(Long id) {
-        return em.find(Lecturer.class, id);
-    }
-
-    @Override
-    public List<ILecturer> findAll() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<ILecturer> cq = cb.createQuery(ILecturer.class);
-        Root<Lecturer> root = cq.from(Lecturer.class);
-
-        cq.select(root);
-        TypedQuery<ILecturer> query = em.createQuery(cq);
+        TypedQuery<ILecturer> query = getEm().createQuery(cq);
         return query.getResultList();
     }
 }

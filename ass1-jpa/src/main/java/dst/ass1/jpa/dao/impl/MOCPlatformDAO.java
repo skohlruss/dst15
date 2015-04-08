@@ -14,39 +14,21 @@ import java.util.List;
 /**
  * Created by pavol on 24.3.2015.
  */
-public class MOCPlatformDAO implements IMOCPlatformDAO {
-
-    private EntityManager em;
+public class MOCPlatformDAO extends GenericDAOImpl<IMOCPlatform> implements IMOCPlatformDAO {
 
     public MOCPlatformDAO(EntityManager em) {
-        this.em = em;
+        super(em, MOCPlatform.class);
     }
 
     @Override
     public List<IMOCPlatform> findByName(String name) {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaBuilder cb = getEm().getCriteriaBuilder();
         CriteriaQuery<IMOCPlatform> cq = cb.createQuery(IMOCPlatform.class);
         Root<MOCPlatform> root = cq.from(MOCPlatform.class);
 
         cq.select(root);
         cq.where(cb.equal(root.get("name"), name));
-        TypedQuery<IMOCPlatform> query = em.createQuery(cq);
-        return query.getResultList();
-    }
-
-    @Override
-    public IMOCPlatform findById(Long id) {
-        return em.find(MOCPlatform.class, id);
-    }
-
-    @Override
-    public List<IMOCPlatform> findAll() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<IMOCPlatform> cq = cb.createQuery(IMOCPlatform.class);
-        Root<MOCPlatform> root = cq.from(MOCPlatform.class);
-
-        cq.select(root);
-        TypedQuery<IMOCPlatform> query = em.createQuery(cq);
+        TypedQuery<IMOCPlatform> query = getEm().createQuery(cq);
         return query.getResultList();
     }
 }

@@ -13,10 +13,6 @@ import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Restrictions;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,12 +20,10 @@ import java.util.List;
 /**
  * Created by pavol on 24.3.2015.
  */
-public class LectureDAO implements ILectureDAO {
-
-    private EntityManager em;
+public class LectureDAO extends GenericDAOImpl<ILecture> implements ILectureDAO {
 
     public LectureDAO(EntityManager em) {
-        this.em = em;
+        super(em, Lecture.class);
     }
 
     /**
@@ -38,7 +32,7 @@ public class LectureDAO implements ILectureDAO {
     @Override
     public List<ILecture> findLecturesForLecturerAndCourse(String lecturerName, String course) {
 
-        Session session = em.unwrap(Session.class);
+        Session session = getEm().unwrap(Session.class);
 
         Criterion lecturerNameRest = lecturerName != null ? Restrictions.eq("l.lecturerName", lecturerName) : Restrictions.disjunction();
         Criterion courseRest = course != null ? Restrictions.eq("m.course", course) : Restrictions.disjunction();
@@ -59,11 +53,10 @@ public class LectureDAO implements ILectureDAO {
      * http://java.dzone.com/articles/hibernate-query-example-qbe
      * Version properties, identifiers and associations are ignored
      */
-
     @Override
     public List<ILecture> findLecturesForStatusFinishedStartandFinish(Date start, Date finish) {
 
-        Session session = em.unwrap(Session.class);
+        Session session = getEm().unwrap(Session.class);
 
         Lecture lecture = new Lecture();
         LectureStreaming lectureStreaming = new LectureStreaming();
@@ -85,21 +78,5 @@ public class LectureDAO implements ILectureDAO {
             lectures.add(streaming.getLecture());
         }
         return lectures;
-    }
-
-    @Override
-    public ILecture findById(Long id) {
-        return em.find(Lecture.class, id);
-    }
-
-    @Override
-    public List<ILecture> findAll() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<ILecture> cq = cb.createQuery(ILecture.class);
-        Root<Lecture> root = cq.from(Lecture.class);
-
-        cq.select(root);
-        TypedQuery<ILecture> query = em.createQuery(cq);
-        return query.getResultList();
     }
 }
