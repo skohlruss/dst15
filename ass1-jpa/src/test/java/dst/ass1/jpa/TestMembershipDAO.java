@@ -17,7 +17,7 @@ import java.util.List;
 /**
  * Created by pavol on 7.4.2015.
  */
-public class MembershipDAOTest extends AbstractTest {
+public class TestMembershipDAO extends AbstractTest {
 
     @Test
     public void testQuery() {
