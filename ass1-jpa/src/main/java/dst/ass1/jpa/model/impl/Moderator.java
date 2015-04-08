@@ -13,7 +13,7 @@ import java.util.List;
  * Created by pavol on 24.3.2015.
  */
 @Entity
-@DiscriminatorValue("m")
+//@DiscriminatorValue("m") // for SINGLE_TABLE
 @NamedQueries({
         @NamedQuery(name = Constants.Q_VIRTUALSCHOOLSOFMODERATOR,
                 query = "select m from Moderator as m" +

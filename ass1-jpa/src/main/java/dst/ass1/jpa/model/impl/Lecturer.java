@@ -15,7 +15,7 @@ import java.util.List;
  * Created by pavol on 24.3.2015.
  */
 @Entity
-@DiscriminatorValue("l")
+//@DiscriminatorValue("l") // for SINGLE_TABLE
 @Table(uniqueConstraints = {
         @UniqueConstraint(columnNames = {"accountNo", "bankCode"})
 })
