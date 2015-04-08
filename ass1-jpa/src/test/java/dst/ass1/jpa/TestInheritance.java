@@ -26,6 +26,8 @@ public class TestInheritance extends AbstractTest {
 
 
         ILecturer lecturer = modelFactory.createLecturer();
+        lecturer.setFirstName("Pavol");
+        lecturer.setLastName("loffay");
         lecturer.setLecturerName("nameress");
         lecturer.setBankCode("2121121");
         lecturer.setBankCode("432432sss");
