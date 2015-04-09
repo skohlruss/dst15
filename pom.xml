@@ -11,6 +11,9 @@
 	<modules>
 		<module>ass1-jpa</module>
 		<module>ass1-nosql</module>
+		<module>ass2-ejb</module>
+		<module>ass2-di</module>
+		<module>ass2-ws</module>
 	</modules>
 
 	<build>

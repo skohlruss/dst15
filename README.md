@@ -6,6 +6,10 @@
 ### Run test ###
 * mvn install -Pass1-jpa
 * mvn install -Pass1-nosql
+* mvn install -Pass2-ejb
+* mvn install -Pass2-ws
+* mvn install -Pass2-di
+* mvn install -Pass2-di-agent
 * mvn install clean install -U
 
 ### Original TU git repo ###
