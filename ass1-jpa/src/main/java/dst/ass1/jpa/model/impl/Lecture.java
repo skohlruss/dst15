@@ -29,7 +29,7 @@ public class Lecture implements ILecture, Serializable {
     private Integer attendingStudents;
     private boolean isPaid;
 
-    @OneToOne(targetEntity = Metadata.class)
+    @OneToOne(targetEntity = Metadata.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "metadata_id", unique = true)
     private IMetadata metadata;
     @OneToOne(targetEntity = LectureStreaming.class, optional = false, cascade = CascadeType.ALL)

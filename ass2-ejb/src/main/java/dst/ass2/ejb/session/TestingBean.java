@@ -2,31 +2,32 @@ package dst.ass2.ejb.session;
 
 import java.security.NoSuchAlgorithmException;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import dst.ass1.jpa.util.test.TestData;
 import dst.ass2.ejb.session.interfaces.ITestingBean;
 
-// TODO add annotation
+@Stateless
 public class TestingBean implements ITestingBean {
 
-	// TODO add annotation
-	private EntityManager em;
-	
-	private TestData testData; 
+    @PersistenceContext(name = "dst")
+    private EntityManager em;
 
-	@Override
-	public void insertTestData() {
-		System.out.println("Started");
+    private TestData testData;
 
-		testData = new TestData(em);
-		try {
-			testData.insertTestData_withoutTransaction();
-		} catch (NoSuchAlgorithmException e) {
-			e.printStackTrace();
-		}
+    @Override
+    public void insertTestData() {
+        System.out.println("Started");
 
-		System.out.println("Finished");
-	}
+        testData = new TestData(em);
+        try {
+            testData.insertTestData_withoutTransaction();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
 
+        System.out.println("Finished");
+    }
 }

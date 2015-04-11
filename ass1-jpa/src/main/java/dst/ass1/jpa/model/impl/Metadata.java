@@ -19,7 +19,7 @@ public class Metadata implements IMetadata, Serializable {
     private Long id;
     private String course;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @OrderColumn
     @JoinTable(name = Constants.J_METADATA_SETTINGS)
     private List<String> settings = new ArrayList<>();
