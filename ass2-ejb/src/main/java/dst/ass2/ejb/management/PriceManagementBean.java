@@ -40,7 +40,7 @@ public class PriceManagementBean implements IPriceManagementBean {
     public BigDecimal getPrice(Integer nrOfHistoricalLectures) {
 
         for (IPrice price: prices) {
-            if (price.getNrOfHistoricalLectures().compareTo(nrOfHistoricalLectures) <= 0) {
+            if (price.getNrOfHistoricalLectures().compareTo(nrOfHistoricalLectures) >= 0) {
                 return price.getPrice();
             }
         }

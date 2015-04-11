@@ -1,13 +1,12 @@
 package dst.ass1.jpa.model.impl;
 
-import dst.ass1.jpa.model.ILecture;
-import dst.ass1.jpa.model.ILectureStreaming;
-import dst.ass1.jpa.model.ILecturer;
-import dst.ass1.jpa.model.IMetadata;
+import dst.ass1.jpa.model.*;
 import dst.ass1.jpa.util.Constants;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by pavol on 24.3.2015.
@@ -52,6 +51,19 @@ public class Lecture implements ILecture, Serializable {
 
     @Override
     public Integer getStreamingTime() {
+        if (streamingTime == null) {
+            if (lectureStreaming != null && lectureStreaming.getStart() != null) {
+                if (lectureStreaming.getEnd() == null) {
+                    streamingTime = (int) (new Date().getTime() - lectureStreaming.getStart().getTime()) / (60 * 1000);
+                } else {
+                    streamingTime = (int) (lectureStreaming.getEnd().getTime() - lectureStreaming.getStart().getTime()) / (60 * 1000);
+                }
+            }
+            else {
+                    streamingTime = 0;
+            }
+        }
+
         return streamingTime;
     }
 
@@ -62,6 +74,17 @@ public class Lecture implements ILecture, Serializable {
 
     @Override
     public Integer getAttendingStudents() {
+        if (lectureStreaming != null && lectureStreaming.getClassrooms() != null) {
+            List<IClassroom> classrooms = lectureStreaming.getClassrooms();
+            Integer sumCapacity = 0;
+            for (IClassroom classroom: classrooms) {
+                sumCapacity += classroom.getStudentCapacity();
+            }
+
+            attendingStudents = sumCapacity;
+        }
+
+
         return attendingStudents;
     }
 

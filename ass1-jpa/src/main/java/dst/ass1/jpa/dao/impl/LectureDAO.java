@@ -6,6 +6,7 @@ import dst.ass1.jpa.model.ILectureStreaming;
 import dst.ass1.jpa.model.LectureStatus;
 import dst.ass1.jpa.model.impl.Lecture;
 import dst.ass1.jpa.model.impl.LectureStreaming;
+import dst.ass1.jpa.model.impl.Lecturer;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
@@ -13,6 +14,8 @@ import org.hibernate.criterion.Example;
 import org.hibernate.criterion.Restrictions;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -70,6 +73,40 @@ public class LectureDAO extends GenericDAOImpl<ILecture> implements ILectureDAO 
         Criteria criteria = session.createCriteria(LectureStreaming.class).add(queryByExample);
 
         return getLectures(criteria.list());
+    }
+
+    @Override
+    public List<ILecture> findNotPayedLectures(String lecturerName) {
+        CriteriaBuilder cb = getEm().getCriteriaBuilder();
+        CriteriaQuery<ILecture> cq = cb.createQuery(ILecture.class);
+        Root<Lecture> root = cq.from(Lecture.class);
+
+        Join<Lecture, Lecturer> lecturer = root.join("lecturer");
+
+        Predicate paidPredicate = cb.isFalse(root.<Boolean>get("isPaid"));
+        Predicate lecturerNamePredicate = cb.equal(lecturer.get("lecturerName"), lecturerName);
+
+        cq.select(root);
+        cq.where(cb.and(paidPredicate, lecturerNamePredicate));
+        TypedQuery<ILecture> query = getEm().createQuery(cq);
+        return query.getResultList();
+    }
+
+    @Override
+    public Integer findNumberOfPayedLectures(String lecturerName) {
+        CriteriaBuilder cb = getEm().getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<Lecture> root = cq.from(Lecture.class);
+
+        Join<Lecture, Lecturer> lecturer = root.join("lecturer");
+
+        Predicate paidPredicate = cb.isTrue(root.<Boolean>get("isPaid"));
+        Predicate lecturerNamePredicate = cb.equal(lecturer.get("lecturerName"), lecturerName);
+
+        cq.select(cb.count(root));
+        cq.where(cb.and(paidPredicate, lecturerNamePredicate));
+        TypedQuery<Long> query = getEm().createQuery(cq);
+        return query.getSingleResult().intValue();
     }
 
     private List<ILecture> getLectures(List<ILectureStreaming> streamings) {

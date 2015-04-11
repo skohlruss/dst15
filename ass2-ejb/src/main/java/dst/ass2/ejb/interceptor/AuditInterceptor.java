@@ -18,17 +18,10 @@ public class AuditInterceptor {
     private EntityManager em;
 
     private ModelFactory modelFactory = new ModelFactory();
-    private DAOFactory daoFactory;
 
-      // TODO causes error
-//    @PostConstruct
-//    protected void aa(InvocationContext invocationContext) {
-//    }
 
     @AroundInvoke
     public Object intercept(InvocationContext invocationContext) throws Exception {
-
-        this.daoFactory = new DAOFactory(em);
 
         IAuditLog auditLog = modelFactory.createAuditLog();
         auditLog.setInvocationTime(new Date());
@@ -50,8 +43,8 @@ public class AuditInterceptor {
 
             IAuditParameter auditParameter = modelFactory.createAuditParameter();
             auditParameter.setParameterIndex(index);
-            auditParameter.setType(parameter.getClass().getCanonicalName());
-            auditParameter.setValue(parameter.toString());
+            auditParameter.setType(parameter != null ? parameter.getClass().getCanonicalName() : "null");
+            auditParameter.setValue(parameter != null ? parameter.toString() : "null");
             auditParameter.setAuditLog(auditLog);
 
             auditLog.getParameters().add(auditParameter);
@@ -65,5 +58,4 @@ public class AuditInterceptor {
 
         return result;
     }
-
 }

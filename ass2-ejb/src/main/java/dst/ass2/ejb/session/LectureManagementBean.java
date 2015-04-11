@@ -124,7 +124,10 @@ public class LectureManagementBean implements ILectureManagementBean {
     }
 
     @Override
-    @Remove(retainIfException = true)
+    /**
+     * after completion of this method bean will be removed
+     */
+    @Remove(retainIfException = true) // if true bean will not be removed if ex if thrown
     public void submitAssignments() throws AssignmentException {
 
         // lecturer has to been logged in before
