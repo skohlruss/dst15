@@ -2,9 +2,11 @@ package dst.ass1.jpa.dao;
 
 import java.util.List;
 
+import dst.ass1.jpa.model.ILecture;
 import dst.ass1.jpa.model.ILectureStreaming;
 import dst.ass1.jpa.model.LectureStatus;
 
 public interface ILectureStreamingDAO extends GenericDAO<ILectureStreaming> {
-	List<ILectureStreaming> findByStatus(LectureStatus status);
+    List<ILectureStreaming> findByStatus(LectureStatus status);
+    List<ILectureStreaming> findByEndDateIsNull();
 }

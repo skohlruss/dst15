@@ -224,7 +224,7 @@ public class LectureManagementBean implements ILectureManagementBean {
 
     private ILectureStreaming createLectureStreaming() {
         ILectureStreaming lectureStreaming = modelFactory.createLectureStreaming();
-        lectureStreaming.setStatus(LectureStatus.SCHEDULED);
+        lectureStreaming.setStatus(LectureStatus.STREAMING);
         lectureStreaming.setStart(new Date());
 
         return lectureStreaming;

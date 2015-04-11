@@ -33,4 +33,17 @@ public class LectureStreamingDAO extends GenericDAOImpl<ILectureStreaming> imple
         TypedQuery<ILectureStreaming> query = getEm().createQuery(cq);
         return query.getResultList();
     }
+
+    @Override
+    public List<ILectureStreaming> findByEndDateIsNull() {
+
+        CriteriaBuilder cb = getEm().getCriteriaBuilder();
+        CriteriaQuery<ILectureStreaming> cq = cb.createQuery(ILectureStreaming.class);
+        Root<LectureStreaming> root = cq.from(LectureStreaming.class);
+
+        cq.select(root);
+        cq.where(cb.isNull(root.get("end")));
+        TypedQuery<ILectureStreaming> query = getEm().createQuery(cq);
+        return query.getResultList();
+    }
 }
