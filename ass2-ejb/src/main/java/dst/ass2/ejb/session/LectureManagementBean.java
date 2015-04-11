@@ -10,19 +10,20 @@ import dst.ass1.jpa.dao.ILecturerDAO;
 import dst.ass1.jpa.dao.IMOCPlatformDAO;
 import dst.ass1.jpa.model.*;
 import dst.ass2.ejb.dto.AssignmentDTO;
+import dst.ass2.ejb.interceptor.AuditInterceptor;
 import dst.ass2.ejb.session.exception.AssignmentException;
 import dst.ass2.ejb.session.interfaces.ILectureManagementBean;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
-import javax.ejb.Stateless;
+import javax.interceptor.Interceptor;
+import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.*;
 
 @Stateful
+@Interceptors({AuditInterceptor.class})
 public class LectureManagementBean implements ILectureManagementBean {
 
     @PersistenceContext(name = "dst")

@@ -3,11 +3,9 @@ package dst.ass2.ejb.model.impl;
 import dst.ass2.ejb.model.IAuditLog;
 import dst.ass2.ejb.model.IAuditParameter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -24,8 +22,8 @@ public class AuditLog implements IAuditLog, Serializable {
     private String result;
     private Date invocationDate;
 
-    @OneToMany(mappedBy = "auditLog",  targetEntity = AuditParameter.class)
-    private List<IAuditParameter> parameters;
+    @OneToMany(mappedBy = "auditLog",  targetEntity = AuditParameter.class, cascade = CascadeType.ALL)
+    private List<IAuditParameter> parameters = new ArrayList<>();
 
 
     @Override
