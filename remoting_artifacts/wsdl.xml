@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:tns="http://dst.infosys.tuwien.ac.at/statistics" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="StatisticsService" targetNamespace="http://dst.infosys.tuwien.ac.at/statistics">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://dst.infosys.tuwien.ac.at/statistics" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://dst.infosys.tuwien.ac.at/statistics">
+  <xs:element name="getStatisticsForPlatform" type="tns:getStatisticsForPlatform"/>
+  <xs:element name="getStatisticsForPlatformResponse" type="tns:getStatisticsForPlatformResponse"/>
+  <xs:element name="stats" type="tns:statisticsDTO"/>
+  <xs:complexType name="getStatisticsForPlatform">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="tns:getStatsRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getStatsRequest">
+    <xs:sequence>
+      <xs:element name="maxStreamings" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getStatisticsForPlatformResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:getStatsResponse"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getStatsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="statistics" type="tns:statisticsDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="statisticsDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="streamings" nillable="true" type="tns:streamingDTO"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="streamingDTO">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="endDate" type="xs:dateTime"/>
+      <xs:element name="numStudents" type="xs:int"/>
+      <xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="UnknownEntityFault" type="tns:UnknownEntityFault"/>
+  <xs:complexType name="UnknownEntityFault">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="name" nillable="true" type="xs:string"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getStatisticsForPlatformResponse">
+    <wsdl:part element="tns:getStatisticsForPlatformResponse" name="parameters">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="WebServiceException">
+    <wsdl:part element="tns:UnknownEntityFault" name="WebServiceException">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStatisticsForPlatform">
+    <wsdl:part element="tns:getStatisticsForPlatform" name="parameters">
+    </wsdl:part>
+    <wsdl:part element="tns:name" name="name">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="service">
+    <wsdl:operation name="getStatisticsForPlatform">
+      <wsdl:input message="tns:getStatisticsForPlatform" name="getStatisticsForPlatform">
+    </wsdl:input>
+      <wsdl:output message="tns:getStatisticsForPlatformResponse" name="getStatisticsForPlatformResponse">
+    </wsdl:output>
+      <wsdl:fault message="tns:WebServiceException" name="WebServiceException">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="StatisticsServiceSoapBinding" type="tns:service">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsaw:UsingAddressing wsdl:required="false"/>
+    <wsp:PolicyReference URI="#StatisticsServiceSoapBinding_WSAM_Addressing_Policy"/>
+    <wsdl:operation name="getStatisticsForPlatform">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getStatisticsForPlatform">
+        <soap:header message="tns:getStatisticsForPlatform" part="name" use="literal">
+        </soap:header>
+        <soap:body parts="parameters" use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getStatisticsForPlatformResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="WebServiceException">
+        <soap:fault name="WebServiceException" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="StatisticsService">
+    <wsdl:port binding="tns:StatisticsServiceSoapBinding" name="servicePort">
+      <soap:address location="http://localhost:4204/ass2-ws/StatisticsService/service"/>
+    </wsdl:port>
+  </wsdl:service>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="StatisticsServiceSoapBinding_WSAM_Addressing_Policy"><wsam:Addressing xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" wsp:Optional="true"><wsp:Policy/></wsam:Addressing></wsp:Policy>
+</wsdl:definitions>
