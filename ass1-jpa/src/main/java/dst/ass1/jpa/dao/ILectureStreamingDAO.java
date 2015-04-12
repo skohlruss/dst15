@@ -9,4 +9,6 @@ import dst.ass1.jpa.model.LectureStatus;
 public interface ILectureStreamingDAO extends GenericDAO<ILectureStreaming> {
     List<ILectureStreaming> findByStatus(LectureStatus status);
     List<ILectureStreaming> findByEndDateIsNull();
+
+    List<ILectureStreaming> findFinishedByPlatformName(String platform, int maxResult);
 }
