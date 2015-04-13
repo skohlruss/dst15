@@ -31,7 +31,7 @@ import javax.xml.ws.FaultAction;
  * use - LITERAL(def) || ENCODED
  *       - ENCODED - data are serialized according to a schema
  *
- * parameterStyle - WRAPPED || BARE
+ * parameterStyle - WRAPPED(def) || BARE
  *
  * DOCUMENT/ENCODED - do not use, nobody follows it
  *

@@ -9,7 +9,6 @@ import dst.ass2.ws.Constants;
 import dst.ass2.ws.IGetStatsRequest;
 import dst.ass2.ws.IGetStatsResponse;
 import dst.ass2.ws.dto.StatisticsDTO;
-import dst.ass2.ws.dto.StreamingDTO;
 import dst.ass2.ws.impl.GetStatsResponse;
 import dst.ass2.ws.session.exception.WebServiceException;
 import dst.ass2.ws.session.interfaces.ILectureStatisticsBean;

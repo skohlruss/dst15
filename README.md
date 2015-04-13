@@ -31,4 +31,8 @@
 * in WSBaseTest.closeContainer() add Thread.sleep(4*60 * 1000) to wait 4 minutes
 * run SOAP-UI (by SmartBear) -> create project by adding wsdl url and run test.
   project is also sawed in remoting_artifacts
+* capture pacets on loopback with wireshark
+
+### EJB remote call test ###
+* wireshark
 
