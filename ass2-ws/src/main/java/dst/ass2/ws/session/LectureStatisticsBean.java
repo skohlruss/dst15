@@ -21,6 +21,8 @@ import javax.jws.WebParam;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.xml.ws.Action;
+import javax.xml.ws.FaultAction;
 import javax.xml.ws.soap.Addressing;
 import java.util.List;
 
@@ -47,6 +49,12 @@ public class LectureStatisticsBean implements ILectureStatisticsBean {
         this.platformDAO = daoFactory.getPlatformDAO();
     }
 
+    @Action(input = Constants.NAMESPACE + "/" + Constants.SERVICE_NAME + "/getStatisticsForPlatformRequest",
+            output = Constants.NAMESPACE + "/" + Constants.SERVICE_NAME +  "/getStatisticsForPlatformResponse",
+            fault = {
+                    @FaultAction(className = WebServiceException.class,
+                            value = Constants.NAMESPACE + "/" + Constants.SERVICE_NAME + "/GetStatisticsForPlatform/WebServiceException")
+            })
     @WebMethod(operationName = Constants.OP_GET_STATS)
     public IGetStatsResponse getStatisticsForPlatform(
             IGetStatsRequest request,
@@ -75,8 +83,6 @@ public class LectureStatisticsBean implements ILectureStatisticsBean {
             statisticsDTO.addStreaming(streaming);
         }
 
-        IGetStatsResponse response = new GetStatsResponse();
-        response.setStatistics(statisticsDTO);
-        return response;
+        return new GetStatsResponse(statisticsDTO);
     }
 }

@@ -13,7 +13,4 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public interface IGetStatsResponse {
 
 	StatisticsDTO getStatistics();
-
-
-	void setStatistics(StatisticsDTO statistics);
 }

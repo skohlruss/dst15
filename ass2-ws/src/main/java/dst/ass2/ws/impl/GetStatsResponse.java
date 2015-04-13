@@ -13,12 +13,18 @@ public class GetStatsResponse implements IGetStatsResponse {
     private StatisticsDTO statisticsDTO;
 
 
+    public GetStatsResponse() {
+    }
+
+    public GetStatsResponse(StatisticsDTO stat) {
+        this.statisticsDTO = stat;
+    }
+
     @Override
     public StatisticsDTO getStatistics() {
         return statisticsDTO;
     }
 
-    @Override
     public void setStatistics(StatisticsDTO statistics) {
         this.statisticsDTO = statistics;
     }

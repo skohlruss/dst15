@@ -66,7 +66,10 @@ public class WSBaseTest {
 	}
 
 	@AfterClass
-	public static void closeContainer() {
+	public static void closeContainer() throws InterruptedException {
+
+//		Thread.sleep(10*60 * 1000);
+
 		if (ctx != null) {
 			try {
 				ctx.close();

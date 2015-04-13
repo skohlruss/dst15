@@ -23,3 +23,12 @@
 * https://github.com/beikov/dst14
 * https://bitbucket.org/8191/tu_dst/src/c3d63c58c225?at=master
 
+### Webservice url - SOAP ###
+* http://localhost:4204/ass2-ws/StatisticsService/service
+* http://localhost:4204/ass2-ws/StatisticsService/service?wsdl
+
+### SOAP test ###
+* in WSBaseTest.closeContainer() add Thread.sleep(4*60 * 1000) to wait 4 minutes
+* run SOAP-UI (by SmartBear) -> create project by adding wsdl url and run test.
+  project is also sawed in remoting_artifacts
+

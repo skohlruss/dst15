@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:tns="http://dst.infosys.tuwien.ac.at/statistics" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="StatisticsService" targetNamespace="http://dst.infosys.tuwien.ac.at/statistics">
+<?xml version='1.0' encoding='UTF-8'?><wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://dst.infosys.tuwien.ac.at/statistics" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="StatisticsService" targetNamespace="http://dst.infosys.tuwien.ac.at/statistics">
   <wsdl:types>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://dst.infosys.tuwien.ac.at/statistics" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://dst.infosys.tuwien.ac.at/statistics">
   <xs:element name="getStatisticsForPlatform" type="tns:getStatisticsForPlatform"/>
@@ -62,11 +62,11 @@
   </wsdl:message>
   <wsdl:portType name="service">
     <wsdl:operation name="getStatisticsForPlatform">
-      <wsdl:input message="tns:getStatisticsForPlatform" name="getStatisticsForPlatform">
+      <wsdl:input message="tns:getStatisticsForPlatform" name="getStatisticsForPlatform" wsam:Action="http://dst.infosys.tuwien.ac.at/statistics/StatisticsService/getStatisticsForPlatformRequest" wsaw:Action="http://dst.infosys.tuwien.ac.at/statistics/StatisticsService/getStatisticsForPlatformRequest">
     </wsdl:input>
-      <wsdl:output message="tns:getStatisticsForPlatformResponse" name="getStatisticsForPlatformResponse">
+      <wsdl:output message="tns:getStatisticsForPlatformResponse" name="getStatisticsForPlatformResponse" wsam:Action="http://dst.infosys.tuwien.ac.at/statistics/StatisticsService/getStatisticsForPlatformResponse" wsaw:Action="http://dst.infosys.tuwien.ac.at/statistics/StatisticsService/getStatisticsForPlatformResponse">
     </wsdl:output>
-      <wsdl:fault message="tns:WebServiceException" name="WebServiceException">
+      <wsdl:fault message="tns:WebServiceException" name="WebServiceException" wsam:Action="http://dst.infosys.tuwien.ac.at/statistics/StatisticsService/GetStatisticsForPlatform/WebServiceException" wsaw:Action="http://dst.infosys.tuwien.ac.at/statistics/StatisticsService/GetStatisticsForPlatform/WebServiceException">
     </wsdl:fault>
     </wsdl:operation>
   </wsdl:portType>
@@ -75,7 +75,7 @@
     <wsaw:UsingAddressing wsdl:required="false"/>
     <wsp:PolicyReference URI="#StatisticsServiceSoapBinding_WSAM_Addressing_Policy"/>
     <wsdl:operation name="getStatisticsForPlatform">
-      <soap:operation soapAction="" style="document"/>
+      <soap:operation soapAction="http://dst.infosys.tuwien.ac.at/statistics/StatisticsService/getStatisticsForPlatformRequest" style="document"/>
       <wsdl:input name="getStatisticsForPlatform">
         <soap:header message="tns:getStatisticsForPlatform" part="name" use="literal">
         </soap:header>
@@ -91,8 +91,8 @@
   </wsdl:binding>
   <wsdl:service name="StatisticsService">
     <wsdl:port binding="tns:StatisticsServiceSoapBinding" name="servicePort">
-      <soap:address location="http://localhost:4204/ass2-ws/StatisticsService/service"/>
+      <soap:address location="http://127.0.0.1:4204/ass2-ws/StatisticsService/service"/>
     </wsdl:port>
   </wsdl:service>
-    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="StatisticsServiceSoapBinding_WSAM_Addressing_Policy"><wsam:Addressing xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" wsp:Optional="true"><wsp:Policy/></wsam:Addressing></wsp:Policy>
+    <wsp:Policy xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="StatisticsServiceSoapBinding_WSAM_Addressing_Policy"><wsam:Addressing wsp:Optional="true"><wsp:Policy/></wsam:Addressing></wsp:Policy>
 </wsdl:definitions>
