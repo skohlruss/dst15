@@ -34,5 +34,5 @@
 * capture pacets on loopback with wireshark
 
 ### EJB remote call test ###
-* wireshark
+* wireshark - filter GIOP 
 

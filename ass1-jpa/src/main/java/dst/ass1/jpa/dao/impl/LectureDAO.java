@@ -11,6 +11,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.Criterion;
 import org.hibernate.criterion.Example;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 import javax.persistence.EntityManager;
@@ -40,7 +41,7 @@ public class LectureDAO extends GenericDAOImpl<ILecture> implements ILectureDAO 
         Criterion lecturerNameRest = lecturerName != null ? Restrictions.eq("l.lecturerName", lecturerName) : Restrictions.disjunction();
         Criterion courseRest = course != null ? Restrictions.eq("m.course", course) : Restrictions.disjunction();
 
-        List<ILecture> lectures = session.createCriteria(Lecture.class)
+        List<ILecture> lectures = session.createCriteria(Lecture.class).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY)
                 .createAlias("lecturer", "l")
                 .createAlias("metadata", "m")
                 .add(lecturerNameRest)
@@ -70,7 +71,7 @@ public class LectureDAO extends GenericDAOImpl<ILecture> implements ILectureDAO 
         lectureStreaming.setEnd(finish);
 
         Example queryByExample = Example.create(lectureStreaming);
-        Criteria criteria = session.createCriteria(LectureStreaming.class).add(queryByExample);
+        Criteria criteria = session.createCriteria(LectureStreaming.class).add(queryByExample).setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
         return getLectures(criteria.list());
     }
