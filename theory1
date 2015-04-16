@@ -1,0 +1,34 @@
+1. Annotations vs XML
+    * Annotations are not supported by platform - old java version
+    * Loosely coupled application - JPA config is externalized from classes
+    * Large number of entities in a variety of different packages vs one XML file
+    * Big number of changes - easier
+    * 
+
+2.
+    * Pesimistic locking - locking whole table
+    * optimistic - Version value is used (Long), an exception is thrown is thre
+      is change on entity between select and update an entity.
+3.
+    * PESSIMISTIC_READ. The entity manager locks the entity as soon as
+        a transaction reads it. The lock is held until the transaction completes.
+        This lock mode is used when you want to query data using repeatable-read semantics.
+        In other words, you want to ensure that the data is not updated between successive
+        reads. This lock mode does not block other transactions from reading the data.
+    * PESSIMISTIC_WRITE. The entity manager locks the entity as soon as a transaction
+        updates it. This lock mode forces serialization among transactions attempting to
+        update the entity data. This lock mode is often used when there is a high likelihood
+        of update failure among concurrent updating transactions.
+
+4.
+    * Implementation - B+ tree, Hash tables, Balanced trees
+    * do not use it on hig volume insert
+    * limitation Select from A where email like '%@wikipedia.org' - full index
+    * scan is performed -  we need to buld reverse index reverse(email_address);
+
+
+5.
+    * Key-values - Riak, Redis, Amazon SimpleDB
+    * Column Family - Cassandra, HBase, google BigTable
+    * Document Databases - MongoBD, CouchDB
+        * Graph Databases - Noe4J, Infinite Graph

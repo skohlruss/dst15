@@ -45,9 +45,14 @@ public class InjectorController implements IInjectionController {
             throw new InjectionException("Annotated field is not component" + field.getName());
         }
 
-        // initialize field
-        Class<?> fieldClass = field.getDeclaringClass();
+
         Object newFieldObject = null;
+        Class<?> fieldClass = field.getDeclaringClass();
+        if (fieldComponent.scope().equals(ScopeType.SINGLETON)) {
+            newFieldObject = singletonMap.get(fieldClass);
+        }
+
+        // initialize field
         if (singletonMap.get(fieldClass) == null) {
             try {
                 newFieldObject = fieldClass.newInstance();

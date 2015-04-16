@@ -3,6 +3,7 @@ package dst.ass1.jpa.listener;
 import javax.persistence.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -14,7 +15,7 @@ public class DefaultListener {
     private static AtomicInteger persisted = new AtomicInteger(0);
     private static AtomicLong persistTime = new AtomicLong(0);
 
-    private static final Map<Integer, Long> persistMap = new HashMap<>();
+    private static final Map<Integer, Long> persistMap = new ConcurrentHashMap<>();
 
     @PrePersist
     void onPrePersist(Object o) {
