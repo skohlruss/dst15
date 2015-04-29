@@ -8,13 +8,13 @@
 	<packaging>pom</packaging>
 	<version>2015</version>
 
-	<modules>
-		<module>ass1-jpa</module>
-		<module>ass1-nosql</module>
-		<module>ass2-ejb</module>
-		<module>ass2-di</module>
-		<module>ass2-ws</module>
-	</modules>
+	<!--<modules>-->
+		<!--<module>ass1-jpa</module>-->
+		<!--<module>ass1-nosql</module>-->
+		<!--<module>ass2-ejb</module>-->
+		<!--<module>ass2-di</module>-->
+		<!--<module>ass2-ws</module>-->
+	<!--</modules>-->
 
 	<build>
 		<plugins>
@@ -260,12 +260,18 @@
 			<id>ass2-di-agent</id>
 			<build>
 				<plugins>
+					<!-- Construction of agent JAR -->
 					<plugin>
 						<artifactId>maven-jar-plugin</artifactId>
 						<configuration>
 							<archive>
 								<manifestEntries>
+									<!--
+									The manifest of the agent JAR file must contain the attribute Premain-Class.
+									The value of this attribute is the name of the agent class.
+									-->
 									<Premain-Class>dst.ass2.di.agent.InjectorAgent</Premain-Class>
+									<Random-manifest-attribute>test</Random-manifest-attribute>
 								</manifestEntries>
 							</archive>
 							<finalName>dst-di-agent</finalName>
@@ -282,6 +288,7 @@
 					<plugin>
 						<artifactId>maven-surefire-plugin</artifactId>
 						<configuration>
+							<!-- Javassist is executed with tests -->
 							<argLine>-javaagent:"${project.build.directory}/dst-di-agent.jar"</argLine>
 							<includes>
 								<include>dst/ass2/di/**/*Transparent*.java</include>

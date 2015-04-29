@@ -32,8 +32,7 @@ public class InjectionControllerFactory {
      * @return the instance
      */
     public static synchronized IInjectionController getTransparentInstance() {
-        // TODO
-        return null;
+        return getStandAloneInstance();
     }
 
     /**
@@ -52,7 +51,6 @@ public class InjectionControllerFactory {
      * @return the instance
      */
     public static IInjectionController getNewTransparentInstance() {
-        // TODO
-        return null;
+        return getNewStandaloneInstance();
     }
 }
