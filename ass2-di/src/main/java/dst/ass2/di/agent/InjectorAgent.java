@@ -1,12 +1,14 @@
 package dst.ass2.di.agent;
 
 import dst.ass2.di.annotation.Component;
+import dst.ass2.di.annotation.Inject;
 import javassist.*;
 
 import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
+import java.lang.reflect.Constructor;
 import java.security.ProtectionDomain;
 
 public class InjectorAgent implements ClassFileTransformer {
@@ -25,7 +27,7 @@ public class InjectorAgent implements ClassFileTransformer {
         try {
             cl = pool.makeClass(new java.io.ByteArrayInputStream(classfileBuffer));
         } catch (IOException e) {
-            System.out.println("error");
+            System.out.println("error make class: " + classBeingRedefined.getName());
         }
 
         if (cl.hasAnnotation(Component.class)) {
@@ -33,15 +35,21 @@ public class InjectorAgent implements ClassFileTransformer {
             try {
                 CtConstructor defaultConstructor = cl.getDeclaredConstructor(new CtClass[0]);
                 defaultConstructor.insertAfter("dst.ass2.di.InjectionControllerFactory.getStandAloneInstance().initialize(this);");
+
+                CtConstructor dummyConstructor = new CtConstructor(new CtClass[]{pool.get("dst.ass2.di.annotation.Inject")}, cl);
+                dummyConstructor.setBody("{System.out.println(\"assist constructor\"); return;}");
+                cl.addConstructor(dummyConstructor);
+
                 return cl.toBytecode();
 
             } catch (NotFoundException e) {
                 System.out.println("error");
                 e.printStackTrace();
             } catch (CannotCompileException e) {
-                e.printStackTrace();
                 System.out.println("error");
+                e.printStackTrace();
             } catch (IOException e) {
+                System.out.println("error");
                 e.printStackTrace();
             }
         }

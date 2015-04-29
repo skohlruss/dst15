@@ -9,6 +9,7 @@ import dst.ass2.di.model.ScopeType;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
@@ -116,7 +117,7 @@ public class InjectorController implements IInjectionController {
                 initializeInjectedField(field, obj);
             } catch (InjectionException | IllegalArgumentException | IllegalAccessException ex) {
                 if (inject.required()) {
-                    throw new InjectionException("Failed to initialize field: " + field.getName());
+                    throw new InjectionException("Failed to initialize field: " + field.getName() + ", "+ ex.getMessage());
                 }
             }
         }
@@ -157,10 +158,16 @@ public class InjectorController implements IInjectionController {
         Object newFieldObject = null;
         if ((newFieldObject = singletonMap.get(fieldClass)) == null) {
             try {
-                newFieldObject = fieldClass.newInstance();
+                newFieldObject = fieldClass.getConstructor(Inject.class).newInstance(inject);
             } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+                throw new InjectionException("Could not instatiate new object");
+            } catch (NoSuchMethodException e) {
+                try {
+                    newFieldObject = fieldClass.newInstance();
+                } catch (InstantiationException e1) {
+                    e1.printStackTrace();
+                }
+            } catch (InvocationTargetException e) {
                 e.printStackTrace();
             }
 
@@ -191,5 +198,27 @@ public class InjectorController implements IInjectionController {
         }
 
         return idFiled;
+    }
+
+    private Object createNewInstance(Class<?> clazz) {
+
+        Object newInstance = null;
+        try {
+            try {
+                newInstance = clazz.getDeclaredConstructor(Component.class).newInstance(null);
+            } catch (InstantiationException e) {
+                newInstance = clazz.newInstance();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                newInstance = clazz.newInstance();
+            } catch (NoSuchMethodException e) {
+                newInstance = clazz.newInstance();
+            }
+        } catch (InstantiationException | IllegalAccessException ex) {
+            System.out.println("kokotina");
+        }
+
+        return newInstance;
     }
 }
