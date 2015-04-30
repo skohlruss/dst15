@@ -2,6 +2,7 @@ package dst.ass2.ejb.session;
 
 import java.security.NoSuchAlgorithmException;
 
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,6 +10,7 @@ import javax.persistence.PersistenceContext;
 import dst.ass1.jpa.util.test.TestData;
 import dst.ass2.ejb.session.interfaces.ITestingBean;
 
+@Remote(ITestingBean.class)
 @Stateless
 public class TestingBean implements ITestingBean {
 

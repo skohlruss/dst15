@@ -10,16 +10,28 @@ import dst.ass2.ejb.management.interfaces.IPriceManagementBean;
 import dst.ass2.ejb.model.IPrice;
 
 import javax.annotation.PostConstruct;
-import javax.ejb.Lock;
-import javax.ejb.LockType;
-import javax.ejb.Singleton;
+import javax.ejb.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * todo performance - locks
+ * The javax.ejb.Singleton annotation is used to specify that the enterprise bean
+ * implementation class is a singleton session bean:
+ *
+ * Singletons that use bean-managed concurrency allow full concurrent access to all the
+ * business and timeout methods in the singleton. The developer of the singleton is
+ * responsible for ensuring that the state of the singleton is synchronized across all
+ * clients. Developers who create singletons with bean-managed concurrency are allowed
+ * to use the Java programming language synchronization primitives, such as synchronization
+ * and volatile, to prevent errors during concurrent access.
+ *
+ * There is no @Lock annotation on the class or business method, so the default
+ * of @Lock(WRITE) is applied to the only business method.
  */
+@Startup
 @Singleton
+@ConcurrencyManagement(ConcurrencyManagementType.CONTAINER)
+@Lock(LockType.READ)
 public class PriceManagementBean implements IPriceManagementBean {
 
     @PersistenceContext(name = "dst")
@@ -73,6 +85,7 @@ public class PriceManagementBean implements IPriceManagementBean {
     }
 
     @Override
+    @Lock(LockType.WRITE)
     public void clearCache() {
         prices.clear();
     }

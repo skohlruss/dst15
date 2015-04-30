@@ -15,6 +15,7 @@ import dst.ass2.ejb.session.exception.AssignmentException;
 import dst.ass2.ejb.session.interfaces.ILectureManagementBean;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.Remote;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 import javax.interceptor.Interceptor;
@@ -22,6 +23,7 @@ import javax.interceptor.Interceptors;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+@Remote(ILectureManagementBean.class)
 @Stateful
 @Interceptors({AuditInterceptor.class})
 public class LectureManagementBean implements ILectureManagementBean {

@@ -34,6 +34,18 @@
 			<groupId>org.apache.openejb</groupId>
 			<artifactId>openejb-core</artifactId>
 		</dependency>
+
+		<!-- for remote invocation -->
+		<dependency>
+			<groupId>org.apache.openejb</groupId>
+			<artifactId>openejb-server</artifactId>
+			<version>4.7.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.openejb</groupId>
+			<artifactId>openejb-http</artifactId>
+			<version>4.7.1</version>
+		</dependency>
 	</dependencies>
 
 </project>

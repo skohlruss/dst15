@@ -16,4 +16,8 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 -->
+<!--
+    To ensure the test-classes get picked up properly, make sure you're placing a file
+    named application-client.xml at src/test/resources/META-INF with the following content:
+-->
 <application-client/>
