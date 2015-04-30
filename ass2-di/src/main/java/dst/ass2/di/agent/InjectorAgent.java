@@ -1,19 +1,19 @@
 package dst.ass2.di.agent;
 
 import dst.ass2.di.annotation.Component;
-import dst.ass2.di.annotation.Inject;
 import javassist.*;
 
 import java.io.IOException;
 import java.lang.instrument.ClassFileTransformer;
 import java.lang.instrument.IllegalClassFormatException;
 import java.lang.instrument.Instrumentation;
-import java.lang.reflect.Constructor;
 import java.security.ProtectionDomain;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class InjectorAgent implements ClassFileTransformer {
 
-//    public InjectorAgent(){}
+    private final static Logger logger = Logger.getLogger(ClassFileTransformer.class.getName());
 
     @Override
     public byte[] transform(ClassLoader loader, String className,
@@ -22,22 +22,21 @@ public class InjectorAgent implements ClassFileTransformer {
             byte[] classfileBuffer) throws IllegalClassFormatException {
 
         ClassPool pool = ClassPool.getDefault();
-
         CtClass cl = null;
+
         try {
             cl = pool.makeClass(new java.io.ByteArrayInputStream(classfileBuffer));
         } catch (IOException e) {
-            System.out.println("error make class: " + classBeingRedefined.getName());
+            logger.log(Level.WARNING, "error make class: " + classBeingRedefined.getName());
         }
 
         if (cl.hasAnnotation(Component.class)) {
-            System.out.println("has annotation");
             try {
                 CtConstructor defaultConstructor = cl.getDeclaredConstructor(new CtClass[0]);
                 defaultConstructor.insertAfter("dst.ass2.di.InjectionControllerFactory.getStandAloneInstance().initialize(this);");
 
                 CtConstructor dummyConstructor = new CtConstructor(new CtClass[]{pool.get("dst.ass2.di.annotation.Inject")}, cl);
-                dummyConstructor.setBody("{System.out.println(\"assist constructor\"); return;}");
+                dummyConstructor.setBody("{System.out.println(\"assist constructor - empty\"); return;}");
                 cl.addConstructor(dummyConstructor);
 
                 return cl.toBytecode();
