@@ -17,6 +17,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dst.ass1.jpa.model.ILecture;
 import dst.ass1.jpa.model.ILectureStreaming;
 import dst.ass1.jpa.model.LectureStatus;
 import dst.ass1.jpa.util.test.TestData;
@@ -346,10 +347,11 @@ public class Test_Bill extends EJBBaseTest {
 		List<ILectureStreaming> streamings = daoFactory
 				.getLectureStreamingDAO().findAll();
 		for (ILectureStreaming streaming : streamings) {
-			if (streaming.getLecture().isPaid()
-					&& streaming.getLecture().getLecturer().getLecturerName()
+			ILecture lecture = streaming.getLecture();
+			if (lecture != null && lecture.isPaid()
+					&& lecture.getLecturer().getLecturerName()
 							.equalsIgnoreCase(lecturer)) {
-				paid.add(streaming.getLecture().getId());
+				paid.add(lecture.getId());
 			}
 		}
 		return paid;
