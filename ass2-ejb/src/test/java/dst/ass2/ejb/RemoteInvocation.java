@@ -10,7 +10,6 @@ import dst.ass2.ejb.session.interfaces.ITestingBean;
 import org.apache.openejb.api.LocalClient;
 import org.junit.*;
 
-import javax.annotation.Resource;
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -21,16 +20,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import static dst.ass2.ejb.util.EJBUtils.lookup;
 
 /**
  * Created by pavol on 30.4.2015.
  *
+ * To run this class add dependency to pom and remove annotation @Ignore
+ *
+ <dependency>
+ <groupId>org.apache.openejb</groupId>
+ <artifactId>openejb-cxf</artifactId>
+ </dependency>
+
+ *
  * http://openejb.apache.org/examples-trunk/telephone-stateful/README.html
  * http://tomee.apache.org/clients.html
  */
+@Ignore
 @LocalClient
-public class Test_RemoteInvocation {
+public class RemoteInvocation {
 
     @PersistenceContext
     private EntityManager em;

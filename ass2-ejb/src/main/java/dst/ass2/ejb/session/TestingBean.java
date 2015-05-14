@@ -10,7 +10,7 @@ import javax.persistence.PersistenceContext;
 import dst.ass1.jpa.util.test.TestData;
 import dst.ass2.ejb.session.interfaces.ITestingBean;
 
-@Remote(ITestingBean.class)
+//@Remote(ITestingBean.class)
 @Stateless
 public class TestingBean implements ITestingBean {
 

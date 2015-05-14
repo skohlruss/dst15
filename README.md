@@ -10,7 +10,7 @@
 * mvn install -Pass2-ws
 * mvn install -Pass2-di
 * mvn install -Pass2-di-agent
-* mvn install clean install -U
+* mvn install clean -Pall -DskipTests
 
 ### Original TU git repo ###
 * TU repository for basic project structure is located on git://hypnotoad.infosys.tuwien.ac.at/dst15/dst15.git
