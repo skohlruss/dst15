@@ -92,7 +92,7 @@
 			<dependency>
 				<groupId>com.espertech</groupId>
 				<artifactId>esper</artifactId>
-				<version>4.6.0</version>
+				<version>5.2.0</version>
 			</dependency>
 			<dependency>
 				<groupId>com.sun.jersey</groupId>
@@ -220,6 +220,10 @@
 				<module>ass2-di</module>
 				<module>ass2-ejb</module>
 				<module>ass2-ws</module>
+				<module>ass3-aop</module>
+				<module>ass3-event</module>
+				<module>ass3-jms</module>
+				<module>ass3-shared</module>
 			</modules>
 		</profile>
 
@@ -341,6 +345,30 @@
 				<module>ass2-ws</module>
 			</modules>
 		</profile>
+
+		<profile>
+			<id>ass3-aop</id>
+			<modules>
+				<module>ass3-aop</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>ass3-event</id>
+			<modules>
+				<module>ass3-event</module>
+				<module>ass3-shared</module>
+			</modules>
+		</profile>
+		
+		<profile>
+			<id>ass3-jms</id>
+			<modules>
+				<module>ass3-jms</module>
+				<module>ass3-shared</module>
+			</modules>
+		</profile>
+
 	</profiles>
 
 
