@@ -6,6 +6,8 @@ import dst.ass2.ejb.model.IAuditLog;
 import dst.ass2.ejb.model.IAuditParameter;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.InvocationContext;
 import javax.persistence.EntityManager;
@@ -21,6 +23,7 @@ public class AuditInterceptor {
 
 
     @AroundInvoke
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public Object intercept(InvocationContext invocationContext) throws Exception {
 
         IAuditLog auditLog = modelFactory.createAuditLog();

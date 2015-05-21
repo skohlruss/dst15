@@ -17,6 +17,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
+import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -48,6 +49,7 @@ public class LectureStatisticsBean implements ILectureStatisticsBean {
         this.platformDAO = daoFactory.getPlatformDAO();
     }
 
+    @WebResult(name = "GetStatsResponse")
     @Action(input = Constants.NAMESPACE + "/" + Constants.SERVICE_NAME + "/getStatisticsForPlatformRequest",
             output = Constants.NAMESPACE + "/" + Constants.SERVICE_NAME +  "/getStatisticsForPlatformResponse",
             fault = {

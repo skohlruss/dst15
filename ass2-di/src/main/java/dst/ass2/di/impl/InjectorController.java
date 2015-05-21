@@ -7,9 +7,9 @@ import dst.ass2.di.annotation.ComponentId;
 import dst.ass2.di.annotation.Inject;
 import dst.ass2.di.model.ScopeType;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
@@ -19,7 +19,7 @@ import java.util.concurrent.atomic.AtomicLong;
  */
 public class InjectorController implements IInjectionController {
 
-    private Map<Class<?>, Object> singletonMap = new HashMap<>();
+    private Map<Class<?>, Object> singletonMap = Collections.synchronizedMap(new HashMap<Class<?>, Object>());
     private AtomicLong idGenerator = new AtomicLong(0);
 
 
@@ -94,14 +94,14 @@ public class InjectorController implements IInjectionController {
                 break;
             }
 
-            id = initializeFieldsForClass(obj, clazz, id);
+            id = initializeFieldsOfClass(obj, clazz, id);
         }
     }
 
     /**
      * Method is called from initializeFields
      */
-    private Long initializeFieldsForClass(Object obj, Class<?> clazz, Long id) throws InjectionException {
+    private Long initializeFieldsOfClass(Object obj, Class<?> clazz, Long id) {
 
         Field idField = null;
         for (Field field : clazz.getDeclaredFields()) {
@@ -115,7 +115,7 @@ public class InjectorController implements IInjectionController {
 
             try {
                 initializeInjectedField(field, obj);
-            } catch (InjectionException | IllegalArgumentException | IllegalAccessException ex) {
+            } catch (IllegalArgumentException | IllegalAccessException | InjectionException ex) {
                 if (inject.required()) {
                     throw new InjectionException("Failed to initialize field: " + field.getName() + ", "+ ex.getMessage());
                 }
@@ -157,18 +157,15 @@ public class InjectorController implements IInjectionController {
 
         Object newFieldObject = null;
         if ((newFieldObject = singletonMap.get(fieldClass)) == null) {
+
             try {
-                newFieldObject = fieldClass.getConstructor(Inject.class).newInstance(inject);
-            } catch (InstantiationException e) {
-                throw new InjectionException("Could not instatiate new object");
-            } catch (NoSuchMethodException e) {
                 try {
+                    newFieldObject = fieldClass.getConstructor(Inject.class).newInstance(inject);
+                } catch (NoSuchMethodException | InvocationTargetException e) {
                     newFieldObject = fieldClass.newInstance();
-                } catch (InstantiationException e1) {
-                    e1.printStackTrace();
                 }
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
+            } catch (InstantiationException ex) {
+                throw new InjectionException("Could not instatiate new object");
             }
 
 
@@ -198,27 +195,5 @@ public class InjectorController implements IInjectionController {
         }
 
         return idFiled;
-    }
-
-    private Object createNewInstance(Class<?> clazz) {
-
-        Object newInstance = null;
-        try {
-            try {
-                newInstance = clazz.getDeclaredConstructor(Component.class).newInstance(null);
-            } catch (InstantiationException e) {
-                newInstance = clazz.newInstance();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                newInstance = clazz.newInstance();
-            } catch (NoSuchMethodException e) {
-                newInstance = clazz.newInstance();
-            }
-        } catch (InstantiationException | IllegalAccessException ex) {
-            System.out.println("kokotina");
-        }
-
-        return newInstance;
     }
 }

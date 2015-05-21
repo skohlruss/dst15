@@ -1,0 +1,25 @@
+4. EJB Lifecycles
+    https://docs.oracle.com/javaee/6/tutorial/doc/giplj.html
+
+5. DI
+    CDI
+    @EJB, @Inject
+
+6.
+    Container managed transactions:
+        http://docs.oracle.com/javaee/5/tutorial/doc/bncij.html
+        http://entjavastuff.blogspot.cz/search/label/EJB3
+        @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+            Required
+            Not_supported
+            Never
+            Supports
+            Requires_new
+            Mandatory
+
+    Bean-Managed Transactions
+        use directly JTA
+
+7.
+    http://stackoverflow.com/questions/2013793/web-services-vs-ejb-vs-rmi-advantages-and-disadvantages
+    http://stackoverflow.com/questions/1568988/what-is-the-difference-between-rmi-and-corba

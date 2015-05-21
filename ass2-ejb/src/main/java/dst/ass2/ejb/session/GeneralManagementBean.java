@@ -20,6 +20,7 @@ import dst.ass2.ejb.session.interfaces.IGeneralManagementBean;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.AsyncResult;
+import javax.ejb.Asynchronous;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -59,6 +60,7 @@ public class GeneralManagementBean implements IGeneralManagementBean {
     }
 
     @Override
+    @Asynchronous
     public Future<BillDTO> getBillForLecturer(String lecturerName) throws Exception {
 
         ILecturer lecturer = lecturerDAO.findByName(lecturerName).get(0);
