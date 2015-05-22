@@ -27,6 +27,10 @@ import javax.persistence.PersistenceContext;
  *
  * There is no @Lock annotation on the class or business method, so the default
  * of @Lock(WRITE) is applied to the only business method.
+ *
+ * Concurrency - container management or bean management
+ *
+ * Implicit is container management - optimistic write
  */
 @Startup
 @Singleton

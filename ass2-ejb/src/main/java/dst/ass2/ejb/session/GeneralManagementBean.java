@@ -29,7 +29,6 @@ import javax.persistence.PersistenceContext;
 /**
  * Cannot be remote because - AsyncResult<> is not serializable
  */
-//@Remote(IGeneralManagementBean.class)
 @Stateless
 public class GeneralManagementBean implements IGeneralManagementBean {
 

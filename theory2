@@ -4,6 +4,8 @@
 5. DI
     CDI
     @EJB, @Inject
+    Injected resources
+    http://docs.oracle.com/javaee/6/tutorial/doc/bncjh.html
 
 6.
     Container managed transactions:
@@ -20,6 +22,12 @@
     Bean-Managed Transactions
         use directly JTA
 
+    Describe 2 phase commit protocol
+
 7.
     http://stackoverflow.com/questions/2013793/web-services-vs-ejb-vs-rmi-advantages-and-disadvantages
     http://stackoverflow.com/questions/1568988/what-is-the-difference-between-rmi-and-corba
+    Web service is slower than EJB,
+    EJB is built on RMI
+    Web service - decouple client and server
+                  different languages are used
