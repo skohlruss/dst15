@@ -98,21 +98,21 @@ public class Scheduler implements IScheduler, MessageListener {
                 return;
             }
 
+            final String messageAction = message.getStringProperty("action");
+            if (messageAction == null) {
+                return;
+            }
             LectureWrapperDTO lectureWrapperDTO = (LectureWrapperDTO) objectInMessage;
 
-            if (message.getStringProperty("action").equals("new")) {
+            if (messageAction.equals(ISchedulerListener.InfoType.CREATED.toString())) {
                 schedulerListener.notify(ISchedulerListener.InfoType.CREATED, lectureWrapperDTO);
-            }
-            if (message.getStringProperty("action").equals("info")) {
+            } else if (messageAction.equals(ISchedulerListener.InfoType.INFO.toString())) {
                 schedulerListener.notify(ISchedulerListener.InfoType.INFO, lectureWrapperDTO);
-            }
-            if (message.getStringProperty("action").equals("deny")) {
+            } else if (messageAction.equals(ISchedulerListener.InfoType.DENIED.toString())) {
                 schedulerListener.notify(ISchedulerListener.InfoType.DENIED, lectureWrapperDTO);
-            }
-            if (message.getStringProperty("action").equals("stream")) {
+            } else if (messageAction.equals(ISchedulerListener.InfoType.STREAMED.toString())) {
                 schedulerListener.notify(ISchedulerListener.InfoType.STREAMED, lectureWrapperDTO);
             }
-
         } catch (JMSException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package dst.ass3.jms;
 
 import dst.ass3.dto.*;
+import dst.ass3.jms.scheduler.IScheduler;
 import dst.ass3.model.ILectureWrapper;
 import dst.ass3.model.LectureType;
 import dst.ass3.model.LectureWrapper;
@@ -96,7 +97,7 @@ public class Server implements MessageListener {
 
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         ObjectMessage objectMessage = session.createObjectMessage(new LectureWrapperDTO(entity));
-        objectMessage.setStringProperty("action", "new");
+        objectMessage.setStringProperty("action", IScheduler.ISchedulerListener.InfoType.CREATED.toString());
         session.createProducer(virtualSchoolQueue).send(objectMessage);
         session.createProducer(schedulerQueue).send(objectMessage);
     }
@@ -106,7 +107,7 @@ public class Server implements MessageListener {
 
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         ObjectMessage objectMessage = session.createObjectMessage(new LectureWrapperDTO(lectureWrapper));
-        objectMessage.setStringProperty("action", "info");
+        objectMessage.setStringProperty("action", IScheduler.ISchedulerListener.InfoType.INFO.toString());
         session.createProducer(schedulerQueue).send(objectMessage);
     }
 
@@ -129,7 +130,7 @@ public class Server implements MessageListener {
         } else  {
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             ObjectMessage objectMessage = session.createObjectMessage(new LectureWrapperDTO(lectureWrapper));
-            objectMessage.setStringProperty("action", "deny");
+            objectMessage.setStringProperty("action", IScheduler.ISchedulerListener.InfoType.DENIED.toString());
             session.createProducer(schedulerQueue).send(objectMessage);
         }
     }
@@ -140,7 +141,7 @@ public class Server implements MessageListener {
 
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
         ObjectMessage objectMessage = session.createObjectMessage(new LectureWrapperDTO(lectureWrapper));
-        objectMessage.setStringProperty("action", "stream");
+        objectMessage.setStringProperty("action", IScheduler.ISchedulerListener.InfoType.STREAMED.toString());
         session.createProducer(schedulerQueue).send(objectMessage);
     }
 
