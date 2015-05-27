@@ -13,7 +13,9 @@ import javax.annotation.Resource;
 import javax.ejb.MessageDriven;
 import javax.jms.*;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  * Created by pavol on 26.5.2015.
@@ -112,7 +114,7 @@ public class Server implements MessageListener {
     }
 
     private void classifyLecture(ClassifyLectureWrapperDTO classifyLectureWrapperDTO) throws JMSException {
-        ILectureWrapper lectureWrapper = getLecture(classifyLectureWrapperDTO.getId());
+        ILectureWrapper lectureWrapper = getLectureById(classifyLectureWrapperDTO.getLectureId());
 
         lectureWrapper.setState(classifyLectureWrapperDTO.getState());
         lectureWrapper.setClassifiedBy(classifyLectureWrapperDTO.getClassifiedBy());
@@ -136,7 +138,7 @@ public class Server implements MessageListener {
     }
 
     private void streamLecture(StreamLectureWrapperDTO streamLectureWrapperDTO) throws JMSException {
-        ILectureWrapper lectureWrapper = getLecture(streamLectureWrapperDTO.getId());
+        ILectureWrapper lectureWrapper = getLectureById(streamLectureWrapperDTO.getLectureId());
         lectureWrapper.setState(streamLectureWrapperDTO.getState());
 
         Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
@@ -152,5 +154,19 @@ public class Server implements MessageListener {
      */
     private ILectureWrapper getLecture(Long lectureId) {
         return entityManager.find(LectureWrapper.class, lectureId);
+    }
+
+    private ILectureWrapper getLectureById(Long lectureId) {
+        TypedQuery<LectureWrapper> query = entityManager.createQuery(
+                "SELECT l FROM LectureWrapper l WHERE l.lectureId = :id", LectureWrapper.class);
+        query.setParameter("id", lectureId);
+
+        ILectureWrapper lectureWrapper = null;
+        try {
+            lectureWrapper = query.getSingleResult();
+        } catch (NoResultException ex) {
+            lectureWrapper = null;
+        }
+        return lectureWrapper;
     }
 }
