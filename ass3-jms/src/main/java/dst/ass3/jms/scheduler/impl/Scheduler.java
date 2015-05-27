@@ -109,6 +109,9 @@ public class Scheduler implements IScheduler, MessageListener {
             if (message.getStringProperty("action").equals("deny")) {
                 schedulerListener.notify(ISchedulerListener.InfoType.DENIED, lectureWrapperDTO);
             }
+            if (message.getStringProperty("action").equals("stream")) {
+                schedulerListener.notify(ISchedulerListener.InfoType.STREAMED, lectureWrapperDTO);
+            }
 
         } catch (JMSException e) {
             e.printStackTrace();

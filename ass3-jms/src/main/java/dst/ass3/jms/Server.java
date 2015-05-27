@@ -1,9 +1,6 @@
 package dst.ass3.jms;
 
-import dst.ass3.dto.ClassifyLectureWrapperDTO;
-import dst.ass3.dto.InfoLectureWrapperDTO;
-import dst.ass3.dto.LectureWrapperDTO;
-import dst.ass3.dto.NewLectureWrapperDTO;
+import dst.ass3.dto.*;
 import dst.ass3.model.ILectureWrapper;
 import dst.ass3.model.LectureType;
 import dst.ass3.model.LectureWrapper;
@@ -80,6 +77,10 @@ public class Server implements MessageListener {
             if (objectInMessage instanceof ClassifyLectureWrapperDTO) {
                 classifyLecture((ClassifyLectureWrapperDTO) objectInMessage);
             }
+
+            if (objectInMessage instanceof StreamLectureWrapperDTO) {
+                streamLecture((StreamLectureWrapperDTO) objectInMessage);
+            }
         } catch (JMSException e) {
             e.printStackTrace();
         }
@@ -116,17 +117,31 @@ public class Server implements MessageListener {
         lectureWrapper.setClassifiedBy(classifyLectureWrapperDTO.getClassifiedBy());
         lectureWrapper.setType(classifyLectureWrapperDTO.getType()); // set or not?
 
+        /**
+         * Notify
+         */
         if (classifyLectureWrapperDTO.getState() == LifecycleState.READY_FOR_STREAMING) {
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             ObjectMessage objectMessage = session.createObjectMessage(new LectureWrapperDTO(lectureWrapper));
+            objectMessage.setStringProperty("classifiedBy", classifyLectureWrapperDTO.getClassifiedBy());
+            objectMessage.setStringProperty("lectureType", classifyLectureWrapperDTO.getType().toString());
             session.createProducer(classroomTopic).send(objectMessage);
-
         } else  {
             Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             ObjectMessage objectMessage = session.createObjectMessage(new LectureWrapperDTO(lectureWrapper));
             objectMessage.setStringProperty("action", "deny");
             session.createProducer(schedulerQueue).send(objectMessage);
         }
+    }
+
+    private void streamLecture(StreamLectureWrapperDTO streamLectureWrapperDTO) throws JMSException {
+        ILectureWrapper lectureWrapper = getLecture(streamLectureWrapperDTO.getId());
+        lectureWrapper.setState(streamLectureWrapperDTO.getState());
+
+        Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+        ObjectMessage objectMessage = session.createObjectMessage(new LectureWrapperDTO(lectureWrapper));
+        objectMessage.setStringProperty("action", "stream");
+        session.createProducer(schedulerQueue).send(objectMessage);
     }
 
     /**
