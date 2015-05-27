@@ -9,7 +9,9 @@
 * mvn install -Pass2-ejb
 * mvn install -Pass2-ws
 * mvn install -Pass2-di
-* mvn install -Pass2-di-agent
+* mvn install -Pass3-jms
+* mvn install -Pass3-event
+* mvn install -Pass3-aop
 * mvn install clean -Pall -DskipTests
 
 ### Original TU git repo ###

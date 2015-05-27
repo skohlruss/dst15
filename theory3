@@ -1,0 +1,9 @@
+JMS
+    Use PTP messaging when every message you send must be processed successfully by one consumer.
+    A JMS client that sends (or publishes) a message is called a producer, whereas a JMS client that receives (or subscribes) to a message is called a consumer.
+    https://ejbvn.wordpress.com/category/week-2-entity-beans-and-message-driven-beans/day-13-understanding-jms-and-message-driven-beans/
+
+
+Message driven bean
+    A message driven bean is like stateless session bean that encapsulates the business logic and doesn't maintain state.
+    To create the message driven bean, you need to declare @MessageDriven annotation and implement MessageListener interface.
