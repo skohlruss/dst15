@@ -1,5 +1,6 @@
 package dst.ass3.event;
 
+import dst.ass3.event.impl.EventStreaming;
 import dst.ass3.model.ILectureWrapper;
 import dst.ass3.model.LectureType;
 import dst.ass3.model.LifecycleState;
@@ -12,15 +13,12 @@ import dst.ass3.dto.LectureWrapperDTO;
 public class EventingFactory {
 
 
-	public static IEventStreaming getInstance() {
+    public static IEventStreaming getInstance() {
+        return new EventStreaming();
+    }
 
-		// TODO
-
-		return null;
-	}
-
-	public static ILectureWrapper createLectureWrapper(Long id, Long lectureId, LifecycleState state,
-			String classifiedBy, LectureType type) {
-		return new LectureWrapperDTO(id, lectureId, state, classifiedBy, type);
-	}
+    public static ILectureWrapper createLectureWrapper(Long id, Long lectureId, LifecycleState state,
+            String classifiedBy, LectureType type) {
+        return new LectureWrapperDTO(id, lectureId, state, classifiedBy, type);
+    }
 }

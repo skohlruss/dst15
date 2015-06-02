@@ -20,7 +20,7 @@
 * for pulling changes do git pull tu master
 * git remote -v -- list all remotes
 
-### Links on other similar projects ### 
+### Links for other similar projects ### 
 * https://github.com/eeezyy/dst14
 * https://github.com/mwagnurr/DST2013 - full points of first assignment
 * https://github.com/beikov/dst14
