@@ -75,7 +75,14 @@ public class PluginExecutor implements IPluginExecutor {
     @Override
     public void stop() {
         if (executorFuture != null) {
+//            try {
+//                watcher.close();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            executorFuture.n;
             executorFuture.cancel(true);
+            executor.shutdown();
         }
     }
 
@@ -102,7 +109,9 @@ public class PluginExecutor implements IPluginExecutor {
                         public void run() {
                             try {
                                 newClass.newInstance().execute();
-                            } catch (InstantiationException | IllegalAccessException ex) {
+                            } catch (InstantiationException |
+                                    IllegalAccessException ex) {
+                                System.out.println("Could not instantiate class " + newClass.getName());
                                 ex.printStackTrace();
                             }
                         }
@@ -112,7 +121,7 @@ public class PluginExecutor implements IPluginExecutor {
                 }
             }
 
-            jarFile.close();
+//            jarFile.close();
         } catch (IOException |
                 ClassNotFoundException ex) {
             ex.printStackTrace();
@@ -137,18 +146,21 @@ public class PluginExecutor implements IPluginExecutor {
                     return;
                 }
 
+                boolean plugins_executed = false;
                 for (WatchEvent<?> event : watchKey.pollEvents()) {
                     WatchEvent.Kind<?> kind = event.kind();
 
                     if (kind == OVERFLOW) {
                         continue;
                     }
+
                     WatchEvent<Path> ev = cast(event);
                     Path fileModified = ev.context();
 
                     if (!fileModified.toString().endsWith(JAR_FILE_EXTENSION)) {
                         continue;
                     }
+//                    plugins_executed = true;
 
                     Path directory = (Path)watchKey.watchable();
                     Path path = directory.resolve(fileModified);

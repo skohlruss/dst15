@@ -20,6 +20,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.weaver.internal.tools.PointcutExpressionImpl;
 import org.aspectj.weaver.tools.ShadowMatch;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.aop.PointcutAdvisor;
 import org.springframework.aop.framework.Advised;
