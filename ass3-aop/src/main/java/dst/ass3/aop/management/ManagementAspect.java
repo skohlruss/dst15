@@ -5,6 +5,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -22,7 +23,12 @@ public class ManagementAspect {
     private Map<IPluginExecutable, TimerTask> timerTaskMap = new ConcurrentHashMap<>(new HashMap<IPluginExecutable, TimerTask>());
 
 
-    @Before("execution(void dst.ass3.aop.IPluginExecutable.execute())")
+    @Pointcut("execution(void dst.ass3.aop.IPluginExecutable.execute())")
+    public void executionMethodPointcut() {
+    }
+
+
+    @Before("executionMethodPointcut()")
     public void executionStart(JoinPoint joinPoint) {
         final IPluginExecutable pluginExecutable = (IPluginExecutable)joinPoint.getTarget();
 
@@ -43,10 +49,9 @@ public class ManagementAspect {
         }
     }
 
-    @After("execution(void dst.ass3.aop.IPluginExecutable.execute())")
-    public void executionEnds(JoinPoint joinPoint) {
+    @After("executionMethodPointcut() && target(pluginExecutable)")
+    public void executionEnds(IPluginExecutable pluginExecutable) {
 
-        final IPluginExecutable pluginExecutable = (IPluginExecutable) joinPoint.getTarget();
         TimerTask timerTask = timerTaskMap.get(pluginExecutable);
         if (timerTask != null) {
             timerTask.cancel();
