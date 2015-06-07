@@ -1,12 +1,9 @@
 package dst.ass3.aop.logging;
 
-
-import dst.ass3.aop.IPluginExecutable;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.*;
 
 import java.lang.reflect.Field;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Aspect
@@ -15,19 +12,6 @@ public class LoggingAspect {
     private static final String MSG_BEFORE = " started to execute";
     private static final String MSG_AFTER = " is finished";
 
-//    @Pointcut("execution(void dst.ass3.aop.IPluginExecutable.execute()) && target(executable) && !@annotation(Invisible)")
-//    public void execute(IPluginExecutable executable) {}
-//
-//    @Before("execute(plugin)")
-//    public void beforeExecute(IPluginExecutable plugin) {
-//        Logger logger = getLogger((IPluginExecutable)plugin);
-//        if (logger != null) {
-//            logger.logp(Level.INFO, plugin.getClass().getCanonicalName(), "call", MSG_BEFORE);
-//            logger.log(Level.INFO, MSG_BEFORE);
-//        } else {
-//            System.out.println(plugin.getClass().getCanonicalName() + MSG_BEFORE);
-//        }
-//    }
 
     @Before("execution(void dst.ass3.aop.IPluginExecutable.execute()) && !@annotation(dst.ass3.aop.logging.Invisible)")
     public void beforeExecute(JoinPoint joinPoint) {
@@ -38,7 +22,6 @@ public class LoggingAspect {
     public void logAfterExecution(JoinPoint joinPoint) {
         log(MSG_AFTER, joinPoint.getTarget());
     }
-
 
     private void log(String message, Object objectContainingLogger) {
 
