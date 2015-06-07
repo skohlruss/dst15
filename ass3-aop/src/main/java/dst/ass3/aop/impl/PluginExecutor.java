@@ -60,6 +60,8 @@ public class PluginExecutor implements IPluginExecutor {
 
     /**
      * watch changes in directories
+     *
+     * First implemented as WatcherService, but there were problem on windows (locked files)
      */
     private class WatcherDirectories implements Runnable {
 
