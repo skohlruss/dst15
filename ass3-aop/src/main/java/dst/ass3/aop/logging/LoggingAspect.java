@@ -42,8 +42,10 @@ public class LoggingAspect {
             for (Field field: object.getClass().getDeclaredFields()) {
                 if (Logger.class.isAssignableFrom(field.getType())) {
 
+                    boolean accessible = field.isAccessible();
                     field.setAccessible(true);
                     logger = (Logger)field.get(object);
+                    field.setAccessible(accessible);
                 }
             }
         } catch (IllegalAccessException e) {
