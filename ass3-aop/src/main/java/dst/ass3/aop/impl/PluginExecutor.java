@@ -4,91 +4,97 @@ import dst.ass3.aop.IPluginExecutable;
 import dst.ass3.aop.IPluginExecutor;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.file.*;
 import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import java.util.concurrent.*;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
-
-import static java.nio.file.StandardWatchEventKinds.*;
-
 /**
- * Created by pavol on 3.6.2015.
+ * Created by pavol on 7.6.2015.
  */
 public class PluginExecutor implements IPluginExecutor {
 
     private static final String JAR_FILE_EXTENSION = ".jar";
     private static final String CLASS_FILE_EXTENSION = ".class";
 
-    private WatchService watcher;
-    private Map<File, WatchKey> watchedDirs = new ConcurrentHashMap<>();
+    private static final Long SCAN_PERIOD_TIME = 500l;
 
-    ExecutorService executor = Executors.newCachedThreadPool();
-    Future<?> executorFuture;
 
-    public PluginExecutor() {
-        try {
-            watcher = FileSystems.getDefault().newWatchService();
-        } catch (IOException ex) {
-            System.out.println("Unable to create filesystem watcher");
-            ex.printStackTrace();
-        }
-    }
+    private Map<File, Map<File, Long>> watchedDirs = new ConcurrentHashMap<>();
+
+    Future<?> watcherFuture;
+    private final ScheduledExecutorService watcherScheduler = Executors.newScheduledThreadPool(1);
+    ExecutorService pluginsExecutorService = Executors.newCachedThreadPool();
+
 
     @Override
     public void monitor(File dir) {
-        WatchKey watchKey = null;
-        try {
-            watchKey = dir.toPath().register(watcher,
-                    StandardWatchEventKinds.ENTRY_CREATE,
-                    StandardWatchEventKinds.ENTRY_MODIFY);
-            watchedDirs.put(dir, watchKey);
-            System.out.println("starting to watch " + dir.toPath().toAbsolutePath());
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Unable to watch file " + dir.toPath().toAbsolutePath());
-        }
+        watchedDirs.put(dir, new ConcurrentHashMap<File, Long>());
     }
 
     @Override
     public void stopMonitoring(File dir) {
-        WatchKey watchKey = watchedDirs.remove(dir);
-        if (watchKey != null) {
-            watchKey.cancel();
-        }
+        watchedDirs.remove(dir);
     }
 
     @Override
     public void start() {
-        if (executorFuture == null) {
-            executorFuture = executor.submit(new Watcher());
+        if (watcherFuture == null) {
+            watcherFuture = watcherScheduler.scheduleAtFixedRate(
+                    new WatcherDirectories(),
+                    0, SCAN_PERIOD_TIME, TimeUnit.MILLISECONDS);
         }
     }
 
     @Override
     public void stop() {
-        if (executorFuture != null) {
-//            try {
-//                watcher.close();
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            executorFuture.n;
-            executorFuture.cancel(true);
-            executor.shutdown();
+        if (watcherFuture !=  null) {
+            watcherFuture.cancel(true);
+        }
+
+    }
+
+    /**
+     * watch changes in directories
+     */
+    private class WatcherDirectories implements Runnable {
+
+        @Override
+        public void run() {
+            for (Map.Entry<File, Map<File, Long>> entry : watchedDirs.entrySet()) {
+                File watchedDir = entry.getKey();
+                Map<File, Long> watchedFiles = entry.getValue();
+
+                for (File fileOfWatchedDir: watchedDir.listFiles(new FileNameFilter(JAR_FILE_EXTENSION))) {
+                    Long lastModified = fileOfWatchedDir.lastModified();
+                    Long previousLastModified = watchedFiles.get(fileOfWatchedDir);
+
+                    if (previousLastModified == null || lastModified > previousLastModified) {
+                        if (!(fileOfWatchedDir.canWrite() || fileOfWatchedDir.canRead())) {
+                            continue;
+                        }
+                        try {
+                            System.out.println("Loading .jar:" + fileOfWatchedDir.toPath());
+                            loadJar(fileOfWatchedDir);
+                        } catch (IOException e) {
+                            System.out.println("couldn't load classes from:" + fileOfWatchedDir.toPath());
+                            e.printStackTrace();
+                        }
+                    }
+
+                    watchedFiles.put(fileOfWatchedDir, lastModified);
+                }
+            }
+
         }
     }
 
-    private void loadJar(File jar) {
-        try {
-            JarFile jarFile = new JarFile(jar);
+    private void loadJar(File jar) throws IOException {
+        try(JarFile jarFile = new JarFile(jar)) {
             for (JarEntry jarEntry: Collections.list(jarFile.entries())) {
                 if (jarEntry.isDirectory() || !jarEntry.getName().endsWith(CLASS_FILE_EXTENSION)) {
                     continue;
@@ -117,60 +123,28 @@ public class PluginExecutor implements IPluginExecutor {
                         }
                     };
 
-                    executor.submit(runnable);
+                    pluginsExecutorService.submit(runnable);
                 }
             }
 
-//            jarFile.close();
         } catch (IOException |
                 ClassNotFoundException ex) {
+            System.out.println("Couldn't load jar file");
             ex.printStackTrace();
         }
     }
 
-    private class Watcher implements Runnable {
+    public static class FileNameFilter implements FilenameFilter {
 
-        @SuppressWarnings("unchecked")
-        private <T> WatchEvent<T> cast(WatchEvent<?> event) {
-            return (WatchEvent<T>)event;
+        private String extension;
+
+        public FileNameFilter(String extension) {
+            this.extension = extension;
         }
 
         @Override
-        public void run() {
-
-            while (true) {
-                WatchKey watchKey = null;
-                try {
-                    watchKey = watcher.take();
-                } catch (InterruptedException ex) {
-                    return;
-                }
-
-                boolean plugins_executed = false;
-                for (WatchEvent<?> event : watchKey.pollEvents()) {
-                    WatchEvent.Kind<?> kind = event.kind();
-
-                    if (kind == OVERFLOW) {
-                        continue;
-                    }
-
-                    WatchEvent<Path> ev = cast(event);
-                    Path fileModified = ev.context();
-
-                    if (!fileModified.toString().endsWith(JAR_FILE_EXTENSION)) {
-                        continue;
-                    }
-//                    plugins_executed = true;
-
-                    Path directory = (Path)watchKey.watchable();
-                    Path path = directory.resolve(fileModified);
-
-                    System.out.println("Loading file " + path.toString());
-                    loadJar(path.toFile());
-                }
-
-                watchKey.reset();
-            }
+        public boolean accept(File dir, String name) {
+            return name.toLowerCase().endsWith(extension);
         }
     }
 }
