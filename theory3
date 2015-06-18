@@ -8,3 +8,30 @@ JMS
 Message driven bean
     A message driven bean is like stateless session bean that encapsulates the business logic and doesn't maintain state.
     To create the message driven bean, you need to declare @MessageDriven annotation and implement MessageListener interface.
+    
+
+Class loading
+    Classes are introduced into the Java environment when they are referenced by name -> new or static method
+    All Java virtual machines include one class loader that is embedded in the virtual machine. This embedded loader is called the primordial class loade
+    
+    ClassLoader in Java works on three principle: delegation, visibility and uniqueness.
+     Delegation principle forward request of class loading to parent class loader and only
+     loads the class, if parent is not able to find or load class. Visibility principle 
+     allows child class loader to see all the classes loaded by parent ClassLoader, but
+     parent class loader can not see classes loaded by child. Uniqueness principle 
+     allows to load a class exactly once, which is basically achieved by delegation
+     and ensures that child ClassLoader doesn't reload the class already loaded by parent.
+      
+     There are three default class loader used in Java, Bootstrap , Extension and System or Application class loader.
+     Read more: http://javarevisited.blogspot.com/2012/12/how-classloader-works-in-java.html#ixzz3dRvdkvBG
+     
+AOP
+    https://sqdw.signaly.cz/0804/aspektove-orientovane-programovani
+    
+AOP Weaving time 
+    https://eclipse.org/aspectj/doc/released/devguide/ltw.html
+    
+Esper
+    http://www.espertech.com/esper/release-5.2.0/esper-reference/html/index.html
+    http://www.espertech.com/esper/release-5.2.0/esper-reference/html/processingmodel.html
+    http://www.uio.no/studier/emner/matnat/ifi/INF5100/h10/undervisningsmateriale/Complex%20Event%20Processing%20in%20Esper.pdf
