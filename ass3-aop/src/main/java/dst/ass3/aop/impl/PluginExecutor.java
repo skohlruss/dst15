@@ -96,6 +96,9 @@ public class PluginExecutor implements IPluginExecutor {
     }
 
     private void loadJar(File jar) throws IOException {
+
+        URLClassLoader urlClassLoader = null;
+
         try(JarFile jarFile = new JarFile(jar)) {
             for (JarEntry jarEntry: Collections.list(jarFile.entries())) {
                 if (jarEntry.isDirectory() || !jarEntry.getName().endsWith(CLASS_FILE_EXTENSION)) {
@@ -103,7 +106,7 @@ public class PluginExecutor implements IPluginExecutor {
                 }
 
                 URL[] urls = new URL[]{jar.toURI().toURL()};
-                URLClassLoader urlClassLoader = URLClassLoader.newInstance(urls);
+                urlClassLoader = URLClassLoader.newInstance(urls);
 
                 String className = jarEntry.getName().replace(CLASS_FILE_EXTENSION, "").replace("/", ".");
                 System.out.println("jar entry, class " + className);
@@ -128,11 +131,13 @@ public class PluginExecutor implements IPluginExecutor {
                     pluginsExecutorService.submit(runnable);
                 }
             }
-
-        } catch (IOException |
-                ClassNotFoundException ex) {
-            System.out.println("Couldn't load jar file");
-            ex.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            System.out.println("Couldn't load class: ");
+            e.printStackTrace();
+        } finally {
+            if (urlClassLoader != null) {
+                urlClassLoader.close();
+            }
         }
     }
 

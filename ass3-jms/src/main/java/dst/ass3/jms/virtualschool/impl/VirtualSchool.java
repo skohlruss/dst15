@@ -75,6 +75,10 @@ public class VirtualSchool implements IVirtualSchool, MessageListener {
             if (!(objectInMessage instanceof LectureWrapperDTO)) {
                 return;
             }
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
+            session.unsubscribe("virtualSchoolQueue");
+
+
 
             ClassifyLectureWrapperDTO classifyLectureWrapperDTO = new ClassifyLectureWrapperDTO((ILectureWrapper) objectInMessage);
             classifyLectureWrapperDTO.setClassifiedBy(name);
@@ -90,9 +94,10 @@ public class VirtualSchool implements IVirtualSchool, MessageListener {
             /**
              * send message to server
              */
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             ObjectMessage objectMessage = session.createObjectMessage(classifyLectureWrapperDTO);
             session.createProducer(serverQueue).send(objectMessage);
+
+            session.createQueue("virtualSchoolQueue");
         } catch (JMSException e) {
             e.printStackTrace();
         }
