@@ -20,15 +20,13 @@ public class PluginExecutor implements IPluginExecutor {
 
     private static final String JAR_FILE_EXTENSION = ".jar";
     private static final String CLASS_FILE_EXTENSION = ".class";
-
     private static final Long SCAN_PERIOD_TIME = 500l;
-
 
     private Map<File, Map<File, Long>> watchedDirs = new ConcurrentHashMap<>();
 
-    Future<?> watcherFuture;
+    private Future<?> watcherFuture;
     private final ScheduledExecutorService watcherScheduler = Executors.newScheduledThreadPool(1);
-    ExecutorService pluginsExecutorService = Executors.newCachedThreadPool();
+    private final ExecutorService pluginsExecutorService = Executors.newCachedThreadPool();
 
 
     @Override
@@ -52,7 +50,7 @@ public class PluginExecutor implements IPluginExecutor {
 
     @Override
     public void stop() {
-        if (watcherFuture !=  null) {
+        if (watcherFuture != null) {
             watcherFuture.cancel(true);
         }
 

@@ -66,6 +66,12 @@ public class VirtualSchool implements IVirtualSchool, MessageListener {
 
     @Override
     public void onMessage(Message message) {
+        try {
+            connection.stop();
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
+
         if (!(message instanceof ObjectMessage)) {
             return;
         }
@@ -73,12 +79,9 @@ public class VirtualSchool implements IVirtualSchool, MessageListener {
         try {
             Object objectInMessage = ((ObjectMessage)message).getObject();
             if (!(objectInMessage instanceof LectureWrapperDTO)) {
+
                 return;
             }
-            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-            session.unsubscribe("virtualSchoolQueue");
-
-
 
             ClassifyLectureWrapperDTO classifyLectureWrapperDTO = new ClassifyLectureWrapperDTO((ILectureWrapper) objectInMessage);
             classifyLectureWrapperDTO.setClassifiedBy(name);
@@ -94,10 +97,15 @@ public class VirtualSchool implements IVirtualSchool, MessageListener {
             /**
              * send message to server
              */
+            Session session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
             ObjectMessage objectMessage = session.createObjectMessage(classifyLectureWrapperDTO);
             session.createProducer(serverQueue).send(objectMessage);
+        } catch (JMSException e) {
+            e.printStackTrace();
+        }
 
-            session.createQueue("virtualSchoolQueue");
+        try {
+            connection.start();
         } catch (JMSException e) {
             e.printStackTrace();
         }

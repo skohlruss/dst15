@@ -32,11 +32,29 @@ public class InjectorAgent implements ClassFileTransformer {
 
         if (cl.hasAnnotation(Component.class)) {
             try {
-                CtConstructor defaultConstructor = cl.getDeclaredConstructor(new CtClass[0]);
-                defaultConstructor.insertAfter("dst.ass2.di.InjectionControllerFactory.getStandAloneInstance().initialize(this);");
 
+                /**
+                 * If class is extended modify only super class, because its constructor
+                 * is called every time
+                 */
+                if (cl.getSuperclass().hasAnnotation(Component.class)) {
+                    return cl.toBytecode();
+                }
+
+                logger.info("Agent - modifying class: " + cl.getSimpleName());
+                /**
+                 * modify the constructor
+                 */
+                CtConstructor[] defaultConstructors = cl.getDeclaredConstructors();
+                for (CtConstructor ctConstructor: defaultConstructors) {
+                    ctConstructor.insertAfter("dst.ass2.di.InjectionControllerFactory.getStandAloneInstance().initialize(this);");
+                }
+
+                /**
+                 * Add new constructor which is used at first place
+                 */
                 CtConstructor dummyConstructor = new CtConstructor(new CtClass[]{pool.get("dst.ass2.di.annotation.Inject")}, cl);
-                dummyConstructor.setBody("{System.out.println(\"assist constructor - empty\"); return;}");
+                dummyConstructor.setBody("{System.out.println(\"Injector agent constructor - empty\"); return;}");
                 cl.addConstructor(dummyConstructor);
 
                 return cl.toBytecode();
