@@ -1,6 +1,6 @@
-# README #
+# Distributed Systems Technologies DST15 #
 
-* Project of **184.260 Distributed Systems Technologies 2015S** on TU Wien
+* Project for **184.260 Distributed Systems Technologies 2015S** on TU Wien
 * All bugs were fixed
 
 ### Run test ###
