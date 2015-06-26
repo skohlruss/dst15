@@ -15,11 +15,6 @@
 * mvn install -Pass3-aop
 * mvn install clean -Pall -DskipTests
 
-### Original TU git repo ###
-* TU repository for basic project structure is located on git://hypnotoad.infosys.tuwien.ac.at/dst15/dst15.git
-* for pulling changes do git pull tu master
-* git remote -v -- list all remotes
-
 ### Webservice url - SOAP ###
 * http://localhost:4204/ass2-ws/StatisticsService/service
 * http://localhost:4204/ass2-ws/StatisticsService/service?wsdl
