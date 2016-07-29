@@ -8,17 +8,17 @@
 	<packaging>pom</packaging>
 	<version>2015</version>
 
-	<!--<modules>-->
-		<!--<module>ass1-jpa</module>-->
-		<!--<module>ass1-nosql</module>-->
-		<!--<module>ass2-ejb</module>-->
-		<!--<module>ass2-di</module>-->
-		<!--<module>ass2-ws</module>-->
-		<!--<module>ass3-jms</module>-->
-		<!--<module>ass3-shared</module>-->
-		<!--<module>ass3-aop</module>-->
-		<!--<module>ass3-event</module>-->
-	<!--</modules>-->
+	<modules>
+		<module>ass1-jpa</module>
+		<module>ass1-nosql</module>
+		<module>ass2-ejb</module>
+		<module>ass2-di</module>
+		<module>ass2-ws</module>
+		<module>ass3-jms</module>
+		<module>ass3-shared</module>
+		<module>ass3-aop</module>
+		<module>ass3-event</module>
+	</modules>
 
 	<build>
 		<plugins>
